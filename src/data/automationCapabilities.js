@@ -1,0 +1,889 @@
+/**
+ * AI Automation Capabilities — generated from ai_automation_master.xlsx
+ * (sheets "Capabilities" + "Tools"). Do not edit by hand; edit the workbook
+ * and re-run `npm run gen:data`.
+ */
+
+export const TOOLS = [
+  {
+    "name": "ChatGPT Enterprise",
+    "icon": "🤖",
+    "category": "General AI",
+    "available": true,
+    "docUrl": "https://docs.company.com/ai-tools/chatgpt"
+  },
+  {
+    "name": "Claude",
+    "icon": "🧠",
+    "category": "General AI",
+    "available": true,
+    "docUrl": "https://docs.company.com/ai-tools/claude"
+  },
+  {
+    "name": "Microsoft Copilot",
+    "icon": "💼",
+    "category": "Productivity",
+    "available": true,
+    "docUrl": "https://docs.company.com/ai-tools/copilot"
+  },
+  {
+    "name": "Google Gemini",
+    "icon": "✨",
+    "category": "General AI",
+    "available": false,
+    "docUrl": ""
+  },
+  {
+    "name": "Augment Code",
+    "icon": "⚡",
+    "category": "Development",
+    "available": true,
+    "docUrl": "https://docs.company.com/ai-tools/augment"
+  },
+  {
+    "name": "GitHub Copilot",
+    "icon": "🐙",
+    "category": "Development",
+    "available": true,
+    "docUrl": "https://docs.company.com/ai-tools/github-copilot"
+  },
+  {
+    "name": "Power BI AI",
+    "icon": "📊",
+    "category": "Analytics",
+    "available": true,
+    "docUrl": "https://docs.company.com/ai-tools/powerbi"
+  },
+  {
+    "name": "Tableau AI",
+    "icon": "📈",
+    "category": "Analytics",
+    "available": false,
+    "docUrl": ""
+  },
+  {
+    "name": "Azure AI",
+    "icon": "☁️",
+    "category": "Cloud AI",
+    "available": true,
+    "docUrl": "https://docs.company.com/ai-tools/azure-ai"
+  },
+  {
+    "name": "Snowflake Cortex",
+    "icon": "❄️",
+    "category": "Data Platform",
+    "available": true,
+    "docUrl": "https://docs.company.com/ai-tools/snowflake"
+  },
+  {
+    "name": "Salesforce Einstein",
+    "icon": "⚡",
+    "category": "CRM",
+    "available": false,
+    "docUrl": ""
+  },
+  {
+    "name": "HubSpot AI",
+    "icon": "🎯",
+    "category": "Marketing",
+    "available": true,
+    "docUrl": "https://docs.company.com/ai-tools/hubspot"
+  },
+  {
+    "name": "Jasper AI",
+    "icon": "✍️",
+    "category": "Content",
+    "available": false,
+    "docUrl": ""
+  },
+  {
+    "name": "Grammarly Business",
+    "icon": "📝",
+    "category": "Writing",
+    "available": true,
+    "docUrl": "https://docs.company.com/ai-tools/grammarly"
+  },
+  {
+    "name": "Figma AI",
+    "icon": "🎨",
+    "category": "Design",
+    "available": false,
+    "docUrl": ""
+  }
+];
+
+export const CAPABILITIES = [
+  {
+    "department": "Human Resources",
+    "category": "Talent Acquisition",
+    "capability": "Candidate sourcing",
+    "description": "AI sourcing from LinkedIn, resumes, databases",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Human Resources",
+    "category": "Talent Acquisition",
+    "capability": "Resume screening",
+    "description": "Automated resume parsing and ranking",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Human Resources",
+    "category": "Employee Experience",
+    "capability": "Onboarding workflows",
+    "description": "Automated onboarding checklists and comms",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Human Resources",
+    "category": "Employee Experience",
+    "capability": "Employee sentiment analysis",
+    "description": "Analyze surveys, Slack, email tone",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Human Resources",
+    "category": "People Ops",
+    "capability": "Policy management",
+    "description": "Auto-generate and update HR policies",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Finance",
+    "category": "Planning",
+    "capability": "Revenue forecasting",
+    "description": "Predict revenue using historical + external data",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex"
+    ]
+  },
+  {
+    "department": "Finance",
+    "category": "Operations",
+    "capability": "Invoice processing",
+    "description": "OCR + classification + routing",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex"
+    ]
+  },
+  {
+    "department": "Accounting",
+    "category": "Close Process",
+    "capability": "Account reconciliation",
+    "description": "Auto-match transactions and flag anomalies",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex"
+    ]
+  },
+  {
+    "department": "Accounting",
+    "category": "Compliance",
+    "capability": "Audit preparation",
+    "description": "Auto-compile audit trails and docs",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Software Engineering",
+    "category": "Development",
+    "capability": "Code writing",
+    "description": "Assist engineers with code generation",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Augment Code",
+      "GitHub Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Software Engineering",
+    "category": "QA",
+    "capability": "Automated test generation",
+    "description": "Generate unit/integration tests",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Augment Code",
+      "GitHub Copilot"
+    ]
+  },
+  {
+    "department": "Software Engineering",
+    "category": "DevOps",
+    "capability": "Pipeline automation",
+    "description": "Optimize and manage CI/CD pipelines",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Augment Code",
+      "GitHub Copilot"
+    ]
+  },
+  {
+    "department": "Software Engineering",
+    "category": "Maintenance",
+    "capability": "Bug detection",
+    "description": "AI-assisted debugging and root cause analysis",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Augment Code",
+      "GitHub Copilot"
+    ]
+  },
+  {
+    "department": "Tech Ops",
+    "category": "Infrastructure",
+    "capability": "System monitoring",
+    "description": "Detect anomalies in infra metrics",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Azure AI",
+      "Snowflake Cortex"
+    ]
+  },
+  {
+    "department": "Tech Ops",
+    "category": "Security",
+    "capability": "Security monitoring",
+    "description": "Detect unusual access or threats",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Azure AI"
+    ]
+  },
+  {
+    "department": "Tech Ops",
+    "category": "Support",
+    "capability": "Incident triage",
+    "description": "Auto-prioritize and route incidents",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Azure AI"
+    ]
+  },
+  {
+    "department": "Product Management",
+    "category": "Discovery",
+    "capability": "User research synthesis",
+    "description": "Summarize interviews and feedback",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Product Management",
+    "category": "Planning",
+    "capability": "Roadmap generation",
+    "description": "Suggest prioritization based on data",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Product Management",
+    "category": "Execution",
+    "capability": "PRD drafting",
+    "description": "Auto-generate product requirement docs",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Design/UX",
+    "category": "Research",
+    "capability": "User testing analysis",
+    "description": "Summarize usability tests",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Augment Code",
+      "GitHub Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Design/UX",
+    "category": "Design",
+    "capability": "Wireframe generation",
+    "description": "Generate UI layouts from prompts",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Design/UX",
+    "category": "Content",
+    "capability": "Microcopy generation",
+    "description": "Generate UX copy variations",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Data Engineering",
+    "category": "Pipelines",
+    "capability": "Data pipeline automation",
+    "description": "Build/optimize pipelines",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Augment Code",
+      "GitHub Copilot",
+      "Power BI AI",
+      "Azure AI",
+      "Snowflake Cortex"
+    ]
+  },
+  {
+    "department": "Data Engineering",
+    "category": "Quality",
+    "capability": "Data quality checks",
+    "description": "Detect anomalies and missing data",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Augment Code",
+      "GitHub Copilot",
+      "Power BI AI",
+      "Azure AI",
+      "Snowflake Cortex"
+    ]
+  },
+  {
+    "department": "Reporting",
+    "category": "Analytics",
+    "capability": "Dashboard generation",
+    "description": "Auto-create dashboards from queries",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex"
+    ]
+  },
+  {
+    "department": "Reporting",
+    "category": "Insights",
+    "capability": "Insight generation",
+    "description": "Auto-explain trends and anomalies",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex"
+    ]
+  },
+  {
+    "department": "Strategy",
+    "category": "Market Intelligence",
+    "capability": "Competitive analysis",
+    "description": "Analyze competitors and market trends",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex"
+    ]
+  },
+  {
+    "department": "Strategy",
+    "category": "Planning",
+    "capability": "Scenario simulation",
+    "description": "Model business scenarios",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex"
+    ]
+  },
+  {
+    "department": "Account Management",
+    "category": "Client Ops",
+    "capability": "Client reporting",
+    "description": "Auto-generate reports",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex",
+      "HubSpot AI",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Account Management",
+    "category": "Engagement",
+    "capability": "Client communication",
+    "description": "Draft emails and updates",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "HubSpot AI",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Business Development",
+    "category": "Lead Gen",
+    "capability": "Lead identification",
+    "description": "Find and qualify leads",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "HubSpot AI",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Business Development",
+    "category": "Outreach",
+    "capability": "Outreach personalization",
+    "description": "Personalized outreach emails",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "HubSpot AI",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Copywriting",
+    "category": "Content",
+    "capability": "Ad copy generation",
+    "description": "Generate ad variants",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Copywriting",
+    "category": "Content",
+    "capability": "SEO optimization",
+    "description": "Optimize content for search",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Copywriting",
+    "category": "Content",
+    "capability": "Content editing",
+    "description": "Rewrite and improve tone",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Legal",
+    "category": "Contracts",
+    "capability": "Contract analysis",
+    "description": "Summarize and flag risks",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Legal",
+    "category": "Compliance",
+    "capability": "Regulatory monitoring",
+    "description": "Track regulatory changes",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Azure AI",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Performance Marketing",
+    "category": "Acquisition",
+    "capability": "Campaign optimization",
+    "description": "Optimize bids and targeting",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "HubSpot AI",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Performance Marketing",
+    "category": "Creative",
+    "capability": "Creative testing",
+    "description": "Generate/test ad creatives",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Augment Code",
+      "GitHub Copilot",
+      "HubSpot AI",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Performance Marketing",
+    "category": "Analytics",
+    "capability": "Attribution modeling",
+    "description": "Optimize attribution models",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex",
+      "HubSpot AI",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Sales",
+    "category": "Pipeline",
+    "capability": "CRM automation",
+    "description": "Update and manage CRM entries",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Augment Code",
+      "GitHub Copilot",
+      "HubSpot AI"
+    ]
+  },
+  {
+    "department": "Sales",
+    "category": "Enablement",
+    "capability": "Sales coaching",
+    "description": "Analyze calls and suggest improvements",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "HubSpot AI"
+    ]
+  },
+  {
+    "department": "Sales",
+    "category": "Forecasting",
+    "capability": "Sales forecasting",
+    "description": "Predict deal outcomes",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "Power BI AI",
+      "Snowflake Cortex",
+      "HubSpot AI"
+    ]
+  },
+  {
+    "department": "Customer Support",
+    "category": "Support Ops",
+    "capability": "Chatbots",
+    "description": "Automate responses",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "HubSpot AI",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Customer Support",
+    "category": "Quality",
+    "capability": "Support QA",
+    "description": "Analyze support quality",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "HubSpot AI",
+      "Grammarly Business"
+    ]
+  },
+  {
+    "department": "Customer Support",
+    "category": "Insights",
+    "capability": "Customer insights",
+    "description": "Extract themes from tickets",
+    "tools": [
+      "ChatGPT Enterprise",
+      "Claude",
+      "Microsoft Copilot",
+      "HubSpot AI",
+      "Grammarly Business"
+    ]
+  }
+];
+
+export const DEPARTMENTS = [
+  "Human Resources",
+  "Finance",
+  "Accounting",
+  "Software Engineering",
+  "Tech Ops",
+  "Product Management",
+  "Design/UX",
+  "Data Engineering",
+  "Reporting",
+  "Strategy",
+  "Account Management",
+  "Business Development",
+  "Copywriting",
+  "Legal",
+  "Performance Marketing",
+  "Sales",
+  "Customer Support"
+];
+
+export const CATEGORIES_BY_DEPARTMENT = {
+  "Human Resources": [
+    "Talent Acquisition",
+    "Employee Experience",
+    "People Ops"
+  ],
+  "Finance": [
+    "Planning",
+    "Operations"
+  ],
+  "Accounting": [
+    "Close Process",
+    "Compliance"
+  ],
+  "Software Engineering": [
+    "Development",
+    "QA",
+    "DevOps",
+    "Maintenance"
+  ],
+  "Tech Ops": [
+    "Infrastructure",
+    "Security",
+    "Support"
+  ],
+  "Product Management": [
+    "Discovery",
+    "Planning",
+    "Execution"
+  ],
+  "Design/UX": [
+    "Research",
+    "Design",
+    "Content"
+  ],
+  "Data Engineering": [
+    "Pipelines",
+    "Quality"
+  ],
+  "Reporting": [
+    "Analytics",
+    "Insights"
+  ],
+  "Strategy": [
+    "Market Intelligence",
+    "Planning"
+  ],
+  "Account Management": [
+    "Client Ops",
+    "Engagement"
+  ],
+  "Business Development": [
+    "Lead Gen",
+    "Outreach"
+  ],
+  "Copywriting": [
+    "Content"
+  ],
+  "Legal": [
+    "Contracts",
+    "Compliance"
+  ],
+  "Performance Marketing": [
+    "Acquisition",
+    "Creative",
+    "Analytics"
+  ],
+  "Sales": [
+    "Pipeline",
+    "Enablement",
+    "Forecasting"
+  ],
+  "Customer Support": [
+    "Support Ops",
+    "Quality",
+    "Insights"
+  ]
+};
+
+export const DEPARTMENT_META = {
+  "Human Resources": {
+    "color": "#0069BA",
+    "icon": "👥"
+  },
+  "Finance": {
+    "color": "#08C177",
+    "icon": "💰"
+  },
+  "Accounting": {
+    "color": "#078181",
+    "icon": "📒"
+  },
+  "Software Engineering": {
+    "color": "#002A4A",
+    "icon": "💻"
+  },
+  "Tech Ops": {
+    "color": "#00D084",
+    "icon": "🖥️"
+  },
+  "Product Management": {
+    "color": "#044D4D",
+    "icon": "🧭"
+  },
+  "Design/UX": {
+    "color": "#0069BA",
+    "icon": "🎨"
+  },
+  "Data Engineering": {
+    "color": "#08C177",
+    "icon": "🗄️"
+  },
+  "Reporting": {
+    "color": "#078181",
+    "icon": "📊"
+  },
+  "Strategy": {
+    "color": "#00D084",
+    "icon": "♟️"
+  },
+  "Account Management": {
+    "color": "#0069BA",
+    "icon": "🤝"
+  },
+  "Business Development": {
+    "color": "#044D4D",
+    "icon": "📈"
+  },
+  "Copywriting": {
+    "color": "#08C177",
+    "icon": "✍️"
+  },
+  "Legal": {
+    "color": "#078181",
+    "icon": "⚖️"
+  },
+  "Performance Marketing": {
+    "color": "#002A4A",
+    "icon": "📣"
+  },
+  "Sales": {
+    "color": "#00D084",
+    "icon": "💼"
+  },
+  "Customer Support": {
+    "color": "#0069BA",
+    "icon": "🎧"
+  }
+};

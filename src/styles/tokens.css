@@ -1,0 +1,89 @@
+/* ==========================================================================
+   Design Tokens
+   --------------------------------------------------------------------------
+   The single source of truth for the design system: the brand palette plus
+   the Lato (body) + DM Serif Display (display) typefaces, spacing, radius,
+   and elevation scales.
+   ========================================================================== */
+
+:root {
+  /* ---- Brand palette ------------------------------------------------------ */
+  --lt-blue: #0069ba; /* primary brand blue  */
+  --lt-blue-darken-2: #002a4a; /* deep blue, hovers   */
+  --lt-blue-lighten-2: #97cef7;
+  --lt-blue-lighten-4: #f1f8ff; /* subtle blue tint    */
+
+  --lt-green: #08c177; /* primary brand green */
+  --lt-green-vivid: #00d084;
+  --lt-green-lighten-3: #effef8; /* subtle green tint   */
+
+  --lt-deep-blue: #101f30; /* near-black navy: headings, footer */
+  --lt-teal: #078181;
+  --lt-teal-darken: #044d4d;
+  --lt-chartreuse: #deff85; /* bright highlight accent */
+
+  /* ---- Neutrals ----------------------------------------------------------- */
+  --lt-white: #ffffff;
+  --lt-gray: #f6f7f7; /* app background        */
+  --lt-gray-light-2: #e3e6e8; /* borders, dividers     */
+  --lt-gray-300: #c6cdd0;
+  --lt-text: #101f30; /* default body text     */
+  --lt-text-secondary: #454545;
+  --lt-text-muted: #687073;
+
+  /* ---- Semantic roles ----------------------------------------------------- */
+  --lt-color-primary: var(--lt-blue);
+  --lt-color-primary-hover: var(--lt-blue-darken-2);
+  --lt-color-accent: var(--lt-green);
+  --lt-color-bg: var(--lt-gray);
+  --lt-color-surface: var(--lt-white);
+  --lt-color-border: var(--lt-gray-light-2);
+  --lt-color-success: var(--lt-green);
+  --lt-color-success-bg: var(--lt-green-lighten-3);
+  --lt-color-warning: #b25f00;
+  --lt-color-warning-bg: #fff4e0;
+  --lt-color-neutral: var(--lt-text-muted);
+  --lt-color-neutral-bg: var(--lt-gray);
+
+  /* ---- Typography --------------------------------------------------------- */
+  --lt-font-body: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  --lt-font-display: "DM Serif Display", Georgia, "Times New Roman", serif;
+
+  --lt-fw-regular: 400;
+  --lt-fw-bold: 700;
+  --lt-fw-black: 900;
+
+  /* Type scale (matches the site's preset font-size steps) */
+  --lt-fs-xs: 0.75rem; /* 12px */
+  --lt-fs-sm: 0.875rem; /* 14px */
+  --lt-fs-base: 1rem; /* 16px */
+  --lt-fs-md: 1.25rem; /* 20px */
+  --lt-fs-lg: 1.5rem; /* 24px */
+  --lt-fs-xl: 2.25rem; /* 36px */
+  --lt-fs-2xl: 2.625rem; /* 42px */
+
+  /* ---- Radius (4 / 8 / 12 / pill) ----------------------------------------- */
+  --lt-radius-sm: 4px;
+  --lt-radius-md: 8px;
+  --lt-radius-lg: 12px;
+  --lt-radius-pill: 64px;
+
+  /* ---- Spacing scale ------------------------------------------------------ */
+  --lt-space-1: 4px;
+  --lt-space-2: 8px;
+  --lt-space-3: 12px;
+  --lt-space-4: 16px;
+  --lt-space-5: 20px;
+  --lt-space-6: 24px;
+  --lt-space-8: 32px;
+  --lt-space-10: 40px;
+
+  /* ---- Elevation ---------------------------------------------------------- */
+  --lt-shadow-sm: 0 1px 2px rgba(16, 31, 48, 0.06);
+  --lt-shadow-md: 0 4px 16px rgba(16, 31, 48, 0.08);
+  --lt-shadow-lg: 0 12px 32px rgba(16, 31, 48, 0.12);
+
+  /* ---- Motion ------------------------------------------------------------- */
+  --lt-transition: 150ms ease;
+}
