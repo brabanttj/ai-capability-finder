@@ -18,6 +18,30 @@
   font-style: italic;
   color: var(--lt-blue);
 }
+.cf-hero__title--hook {
+  font-size: clamp(2.6rem, 6vw, 4.5rem);
+  letter-spacing: -0.01em;
+}
+.cf-hero__title--hook em {
+  background: linear-gradient(120deg, var(--lt-blue), var(--lt-green));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
+
+/* Hero call-to-action */
+.cf-hero__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--lt-space-2);
+  margin-top: var(--lt-space-6);
+}
+.cf-hero__cta-note {
+  font-size: var(--lt-fs-xs);
+  color: var(--lt-text-muted);
+}
 .cf-hero__sub {
   max-width: 62ch;
   margin: 0 auto;

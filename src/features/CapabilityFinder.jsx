@@ -89,13 +89,26 @@ export default function CapabilityFinder() {
       {/* Hero */}
       <section className="cf-hero">
         <span className="lt-eyebrow">AI Automation Capabilities</span>
-        <h1 className="cf-hero__title">
-          The smarter way to find <em>automation opportunities</em>
+        <h1 className="cf-hero__title cf-hero__title--hook">
+          This is how I <em>AI</em>.
         </h1>
         <p className="cf-hero__sub">
-          Stop guessing. Search and compare AI automation capabilities across
-          every department, mapped to the work your teams actually do.
+          Stop guessing. Explore the AI capabilities available across every
+          team, see the tools enabled for each — and share how you AI.
         </p>
+        <div className="cf-hero__cta">
+          <Button
+            variant="accent"
+            href="how-to-add.html"
+            target="_blank"
+            rel="noreferrer"
+          >
+            ➕ Add a capability
+          </Button>
+          <span className="cf-hero__cta-note">
+            Have a way you use AI? Add it to the list.
+          </span>
+        </div>
         <div className="cf-stats">
           <Stat value={filtered.length} label="Capabilities" />
           <Stat value={DEPARTMENTS.length} label="Departments" />

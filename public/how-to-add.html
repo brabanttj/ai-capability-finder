@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add a capability &middot; This is how I AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lato:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue: #0069ba;
+        --blue-dk: #002a4a;
+        --green: #08c177;
+        --navy: #101f30;
+        --gray: #f6f7f7;
+        --border: #e3e6e8;
+        --muted: #687073;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--navy);
+        background: var(--gray);
+        line-height: 1.6;
+      }
+      .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+      .eyebrow {
+        font-size: 12px; font-weight: 900; letter-spacing: 0.08em;
+        text-transform: uppercase; color: var(--green);
+      }
+      h1 {
+        font-family: "DM Serif Display", Georgia, serif;
+        font-size: clamp(2rem, 5vw, 3rem); margin: 8px 0 8px; line-height: 1.1;
+      }
+      h1 em { color: var(--blue); font-style: italic; }
+      .lede { font-size: 1.15rem; color: #454545; margin: 0 0 32px; }
+      h2 {
+        font-family: "DM Serif Display", Georgia, serif;
+        font-size: 1.5rem; margin: 36px 0 12px;
+      }
+      .card {
+        background: #fff; border: 1px solid var(--border);
+        border-radius: 12px; padding: 24px; margin-bottom: 20px;
+      }
+      ol, ul { margin: 0; padding-left: 22px; }
+      li { margin-bottom: 10px; }
+      code {
+        background: #eef2f5; padding: 2px 7px; border-radius: 6px;
+        font-family: Consolas, monospace; font-size: 0.92em; color: var(--blue-dk);
+      }
+      .step-num {
+        display: inline-grid; place-items: center; width: 26px; height: 26px;
+        border-radius: 50%; background: var(--blue); color: #fff;
+        font-weight: 700; font-size: 14px; margin-right: 8px; vertical-align: middle;
+      }
+      .steps { list-style: none; padding: 0; }
+      .steps li { margin-bottom: 16px; }
+      .pill {
+        display: inline-block; padding: 2px 10px; border-radius: 999px;
+        background: #effef8; color: #044d4d; border: 1px solid #b7ebd4;
+        font-size: 12px; font-weight: 700;
+      }
+      .tip {
+        background: #effef8; border: 1px solid #b7ebd4; border-left: 4px solid var(--green);
+        border-radius: 8px; padding: 16px; font-size: 0.95rem; color: #2a4a3c;
+      }
+      .back {
+        display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px;
+        color: var(--blue); text-decoration: none; font-weight: 700; font-size: 14px;
+      }
+      .back:hover { text-decoration: underline; }
+      table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+      th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+      th { background: var(--navy); color: #fff; }
+      td code { font-size: 0.85em; }
+      footer { margin-top: 40px; color: var(--muted); font-size: 0.85rem; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <a class="back" href="./">&larr; Back to the finder</a>
+
+      <span class="eyebrow">Contribute</span>
+      <h1>Add <em>how you AI</em></h1>
+      <p class="lede">
+        Got a task you automate with AI that isn't here yet? Capabilities live in
+        one spreadsheet, and publishing an update takes a couple of clicks.
+      </p>
+
+      <h2>The 3 steps</h2>
+      <div class="card">
+        <ul class="steps">
+          <li>
+            <span class="step-num">1</span>
+            Open and edit <code>ai_automation_master.xlsx</code> in the project folder.
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <strong>Save</strong> it and <strong>close</strong> Excel.
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            Double-click <code>publish-changes.bat</code>. Wait 1–2 minutes and refresh this site.
+          </li>
+        </ul>
+      </div>
+
+      <h2>What goes in the spreadsheet</h2>
+      <p>The workbook has two tabs:</p>
+      <table>
+        <thead>
+          <tr><th>Tab</th><th>What it holds</th><th>Key columns</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Capabilities</strong></td>
+            <td>One row per task</td>
+            <td>Department, Category, Capability, Description, then an
+              <span class="pill">X</span> under each AI tool that applies</td>
+          </tr>
+          <tr>
+            <td><strong>Tools</strong></td>
+            <td>One row per AI tool</td>
+            <td>Tool, Icon, Category, Available (Yes/No), DocURL (the “View docs” link)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Add a new capability</h2>
+      <div class="card">
+        <ol>
+          <li>On the <strong>Capabilities</strong> tab, go to the first empty row.</li>
+          <li>Fill in <strong>Department</strong>, <strong>Category</strong>,
+            <strong>Capability</strong>, and <strong>Description</strong>.</li>
+          <li>Put an <span class="pill">X</span> under each AI tool that's enabled for it.</li>
+          <li>Save, close Excel, and run <code>publish-changes.bat</code>.</li>
+        </ol>
+      </div>
+
+      <h2>Add a brand-new AI tool</h2>
+      <div class="card">
+        <p>This needs two edits, because tools live on both tabs:</p>
+        <ol>
+          <li>On the <strong>Tools</strong> tab, add a row — set
+            <strong>Available</strong> to <code>Yes</code> and paste the doc link.</li>
+          <li>On the <strong>Capabilities</strong> tab, add a column with the
+            <em>exact</em> tool name, then <span class="pill">X</span> the rows where it applies.</li>
+        </ol>
+      </div>
+
+      <div class="tip">
+        💡 <strong>Tip:</strong> Keep the file name, the two tab names, and the
+        main column names exactly as they are, and always close Excel before you
+        publish. A tool only shows for a capability when it has an
+        <span class="pill">X</span> and its <strong>Available</strong> is <code>Yes</code>.
+      </div>
+
+      <footer>
+        This is how I AI. &middot; Data shown on the site is sample/illustrative data.
+      </footer>
+    </div>
+  </body>
+</html>
