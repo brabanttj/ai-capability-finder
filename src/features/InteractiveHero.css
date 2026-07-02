@@ -1,0 +1,192 @@
+/* ==========================================================================
+   Interactive hero — "This is how I AI."
+   On-brand (LendingTree palette + DM Serif Display / Lato), compact,
+   with per-word hover reveals.
+   ========================================================================== */
+
+.hero {
+  background:
+    radial-gradient(760px 300px at 12% 0%, rgba(8, 193, 119, 0.07), transparent 70%),
+    radial-gradient(760px 300px at 92% 0%, rgba(0, 105, 186, 0.07), transparent 70%),
+    var(--lt-white);
+  border-bottom: 1px solid var(--lt-color-border);
+}
+.hero__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(1.75rem, 4vw, 2.75rem) var(--lt-space-6);
+}
+
+.hero__title {
+  font-family: var(--lt-font-display);
+  font-weight: var(--lt-fw-regular);
+  color: var(--lt-deep-blue);
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  line-height: 1.15;
+  margin: 0;
+}
+.hw {
+  position: relative;
+  margin-right: 0.3em;
+  cursor: pointer;
+  outline: none;
+  transition: color 0.25s ease, text-shadow 0.25s ease, transform 0.16s ease;
+}
+/* Animated underline that grows in on hover/focus/active */
+.hw::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.04em;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.22s ease;
+}
+
+/* Idle "wave": one word at a time previews its accent, walking across */
+.hw--hint {
+  color: var(--accent);
+  text-shadow: 0 0 26px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.hw--hint::after {
+  transform: scaleX(1);
+  opacity: 0.4;
+}
+
+/* Real interaction: full accent + underline + slight lift */
+.hw--on,
+.hw:hover,
+.hw:focus-visible {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+.hw--on::after,
+.hw:hover::after,
+.hw:focus-visible::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+.hero__period {
+  color: var(--lt-deep-blue);
+  margin-left: -0.3em; /* tuck the period tight against "AI" */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hw::after { transition: none; }
+}
+
+/* Reveal line — doubles as the subtitle when nothing is hovered */
+.hero__reveal {
+  min-height: 3.1em;
+  max-width: 62ch;
+  margin: var(--lt-space-3) 0 0;
+  font-size: var(--lt-fs-md);
+  line-height: 1.5;
+  color: var(--lt-text-secondary);
+  transition: color 0.16s ease;
+}
+.hero__reveal--on {
+  font-style: italic;
+}
+.hero__caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  transform: translateY(0.18em);
+  margin-left: 3px;
+  background: currentColor;
+  animation: hero-blink 0.9s step-start infinite;
+}
+@keyframes hero-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* CTA + stats */
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lt-space-4);
+  margin-top: var(--lt-space-5);
+}
+.hero__stats {
+  font-size: var(--lt-fs-sm);
+  color: var(--lt-text-muted);
+}
+
+/* Restyled "Share how you AI" button — gradient pill with a shine sweep */
+.hero__share {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 26px;
+  border: none;
+  border-radius: var(--lt-radius-pill);
+  background: linear-gradient(120deg, var(--lt-blue), var(--lt-teal) 55%, var(--lt-green));
+  color: #fff;
+  font-family: var(--lt-font-body);
+  font-size: var(--lt-fs-sm);
+  font-weight: var(--lt-fw-black);
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 105, 186, 0.28);
+  transition: transform 0.16s ease, box-shadow 0.2s ease;
+}
+.hero__share:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(8, 193, 119, 0.34);
+}
+.hero__share:active {
+  transform: translateY(0);
+}
+.hero__share-ic {
+  font-size: 1.05em;
+  animation: hero-twinkle 2.2s ease-in-out infinite;
+}
+@keyframes hero-twinkle {
+  0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  50% { opacity: 0.6; transform: scale(1.2) rotate(20deg); }
+}
+/* moving shine */
+.hero__share::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+  transform: skewX(-18deg);
+  animation: hero-shine 3.4s ease-in-out infinite;
+}
+@keyframes hero-shine {
+  0% { left: -60%; }
+  55%, 100% { left: 130%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__share-ic,
+  .hero__share::after {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__caret { animation: none; }
+}
+
+@media (max-width: 560px) {
+  .hero__reveal { min-height: 4.2em; }
+}

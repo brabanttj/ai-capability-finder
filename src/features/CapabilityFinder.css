@@ -84,7 +84,7 @@
 }
 .cf-toolbar__grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: var(--lt-space-3);
 }
 .cf-toolbar__foot {
@@ -205,6 +205,52 @@
   font-size: var(--lt-fs-sm);
   color: var(--lt-text-secondary);
   line-height: 1.5;
+}
+
+/* Upvote button — pushed to the bottom-left of the card body */
+.cap-vote {
+  align-self: flex-start;
+  margin-top: var(--lt-space-4);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: var(--lt-radius-pill);
+  border: 1px solid var(--lt-gray-light-2);
+  background: var(--lt-white);
+  color: var(--lt-text-muted);
+  font-family: var(--lt-font-body);
+  font-size: var(--lt-fs-xs);
+  font-weight: var(--lt-fw-bold);
+  cursor: pointer;
+  transition: background var(--lt-transition), border-color var(--lt-transition),
+    color var(--lt-transition), transform var(--lt-transition);
+}
+.cap-vote:hover {
+  border-color: var(--lt-blue-lighten-2);
+  background: var(--lt-blue-lighten-4);
+  color: var(--lt-blue);
+}
+.cap-vote__arrow {
+  font-size: 10px;
+  line-height: 1;
+  transition: transform var(--lt-transition);
+}
+.cap-vote:hover .cap-vote__arrow {
+  transform: translateY(-1px);
+}
+.cap-vote--on {
+  background: var(--lt-green);
+  border-color: var(--lt-green);
+  color: #fff;
+}
+.cap-vote--on:hover {
+  background: var(--lt-green-vivid);
+  border-color: var(--lt-green-vivid);
+  color: #fff;
+}
+.cap-vote__count {
+  font-variant-numeric: tabular-nums;
 }
 
 /* ---- Capability modal content -------------------------------------------- */

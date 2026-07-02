@@ -14,6 +14,8 @@ import {
   Button,
   Modal,
 } from "../components/ui/index.js";
+import InteractiveHero from "./InteractiveHero.jsx";
+import { capId, baseCount, loadVoted, saveVoted } from "../lib/votes.js";
 import "./CapabilityFinder.css";
 
 const ALL = "All";
@@ -23,7 +25,21 @@ export default function CapabilityFinder() {
   const [searchTerm, setSearchTerm] = useState("");
   const [department, setDepartment] = useState(ALL);
   const [category, setCategory] = useState(ALL);
+  const [sort, setSort] = useState("department");
   const [selected, setSelected] = useState(null);
+  const [voted, setVoted] = useState(() => loadVoted());
+
+  const countOf = (cap) => baseCount(cap) + (voted.has(capId(cap)) ? 1 : 0);
+  const toggleVote = (cap) => {
+    const id = capId(cap);
+    setVoted((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      saveVoted(next);
+      return next;
+    });
+  };
 
   // Category options cascade from the selected department
   const categoryOptions = useMemo(() => {
@@ -60,6 +76,15 @@ export default function CapabilityFinder() {
     return Array.from(map, ([dept, rows]) => ({ dept, rows }));
   }, [filtered]);
 
+  // Flat list sorted by upvotes, for the "Most popular" sort
+  const popular = useMemo(
+    () =>
+      [...filtered].sort(
+        (a, b) => countOf(b) - countOf(a) || a.capability.localeCompare(b.capability)
+      ),
+    [filtered, voted]
+  );
+
   const onDepartmentChange = (value) => {
     setDepartment(value);
     setCategory(ALL); // reset category when department changes
@@ -85,40 +110,9 @@ export default function CapabilityFinder() {
   };
 
   return (
-    <div className="cf">
-      {/* Hero */}
-      <section className="cf-hero">
-        <span className="lt-eyebrow">AI Automation Capabilities</span>
-        <h1 className="cf-hero__title cf-hero__title--hook">
-          This is how I <em>AI</em>.
-        </h1>
-        <p className="cf-hero__sub">
-          Stop guessing. Explore the AI capabilities available across every
-          team, see the tools enabled for each — and share how you AI.
-        </p>
-        <div className="cf-hero__cta">
-          <Button
-            variant="accent"
-            href="how-to-add.html"
-            target="_blank"
-            rel="noreferrer"
-          >
-            ➕ Add a capability
-          </Button>
-          <span className="cf-hero__cta-note">
-            Have a way you use AI? Add it to the list.
-          </span>
-        </div>
-        <div className="cf-stats">
-          <Stat value={filtered.length} label="Capabilities" />
-          <Stat value={DEPARTMENTS.length} label="Departments" />
-          <Stat
-            value={categoryOptions.length - 1}
-            label="Categories"
-            tone="green"
-          />
-        </div>
-      </section>
+    <>
+      <InteractiveHero />
+      <div className="cf">
 
       {/* Toolbar: search + Department + Category */}
       <Card className="cf-toolbar" id="finder">
@@ -153,6 +147,14 @@ export default function CapabilityFinder() {
               </option>
             ))}
           </Select>
+          <Select
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+            aria-label="Sort by"
+          >
+            <option value="department">Sort: Department</option>
+            <option value="popular">Sort: Most popular</option>
+          </Select>
         </div>
         <div className="cf-toolbar__foot">
           <span className="cf-count">
@@ -165,8 +167,8 @@ export default function CapabilityFinder() {
         </div>
       </Card>
 
-      {/* Results grouped by department */}
-      {byDepartment.length === 0 ? (
+      {/* Results */}
+      {filtered.length === 0 ? (
         <Card className="cf-empty-results">
           <div className="cf-empty__icon" aria-hidden="true">
             🔍
@@ -176,6 +178,32 @@ export default function CapabilityFinder() {
             Try clearing the search or choosing a different department.
           </p>
         </Card>
+      ) : sort === "popular" ? (
+        <section className="cf-dept">
+          <div className="cf-dept__head">
+            <span className="cf-dept__icon" style={{ background: "#0069ba1a", color: "#0069ba" }}>
+              🔥
+            </span>
+            <h2 className="cf-dept__name">Most popular</h2>
+            <span className="cf-dept__count">{popular.length}</span>
+          </div>
+          <div className="cf-grid">
+            {popular.map((row) => {
+              const meta = DEPARTMENT_META[row.department] || FALLBACK_META;
+              return (
+                <CapabilityCard
+                  key={`${row.department}|${row.capability}`}
+                  row={row}
+                  accent={meta.color}
+                  onSelect={() => setSelected(row)}
+                  count={countOf(row)}
+                  voted={voted.has(capId(row))}
+                  onVote={() => toggleVote(row)}
+                />
+              );
+            })}
+          </div>
+        </section>
       ) : (
         byDepartment.map(({ dept, rows }) => {
           const meta = DEPARTMENT_META[dept] || FALLBACK_META;
@@ -198,6 +226,9 @@ export default function CapabilityFinder() {
                     row={row}
                     accent={meta.color}
                     onSelect={() => setSelected(row)}
+                    count={countOf(row)}
+                    voted={voted.has(capId(row))}
+                    onVote={() => toggleVote(row)}
                   />
                 ))}
               </div>
@@ -209,11 +240,12 @@ export default function CapabilityFinder() {
       {selected && (
         <CapabilityModal capability={selected} onClose={() => setSelected(null)} />
       )}
-    </div>
+      </div>
+    </>
   );
 }
 
-function CapabilityCard({ row, accent, onSelect }) {
+function CapabilityCard({ row, accent, onSelect, count, voted, onVote }) {
   return (
     <Card
       pad={false}
@@ -245,6 +277,20 @@ function CapabilityCard({ row, accent, onSelect }) {
         <span className="cap-card__cat">{row.category}</span>
         <h3 className="cap-card__title">{row.capability}</h3>
         <p className="cap-card__desc">{row.description}</p>
+        <button
+          type="button"
+          className={`cap-vote${voted ? " cap-vote--on" : ""}`}
+          aria-pressed={voted}
+          aria-label={`Upvote ${row.capability}${voted ? " (voted)" : ""}`}
+          title={voted ? "Remove your upvote" : "Upvote this capability"}
+          onClick={(e) => {
+            e.stopPropagation();
+            onVote();
+          }}
+        >
+          <span className="cap-vote__arrow" aria-hidden="true">▲</span>
+          <span className="cap-vote__count">{count}</span>
+        </button>
       </div>
     </Card>
   );
@@ -329,15 +375,4 @@ function CapabilityModal({ capability, onClose }) {
   );
 }
 
-function Stat({ value, label, tone }) {
-  return (
-    <div className="cf-stat">
-      <span
-        className={`cf-stat__value${tone === "green" ? " cf-stat__value--green" : ""}`}
-      >
-        {value}
-      </span>
-      <span className="cf-stat__label">{label}</span>
-    </div>
-  );
-}
+/* (hero stats now live in InteractiveHero) */

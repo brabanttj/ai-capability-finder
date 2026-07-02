@@ -1,0 +1,105 @@
+/* ==========================================================================
+   Capability submission form (inside the Modal)
+   ========================================================================== */
+
+.cfm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lt-space-4);
+}
+.cfm__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--lt-space-4);
+}
+.cfm__textarea {
+  resize: vertical;
+  min-height: 52px;
+  font-family: var(--lt-font-body);
+  line-height: 1.5;
+}
+
+/* Tool checkboxes as selectable chips */
+.cfm__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cfm__tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: var(--lt-radius-pill);
+  border: 1px solid var(--lt-gray-light-2);
+  background: var(--lt-white);
+  font-size: var(--lt-fs-xs);
+  font-weight: var(--lt-fw-bold);
+  color: var(--lt-text-secondary);
+  cursor: pointer;
+  transition: background var(--lt-transition), border-color var(--lt-transition),
+    color var(--lt-transition);
+}
+.cfm__tool:hover {
+  border-color: var(--lt-blue-lighten-2);
+}
+.cfm__tool input {
+  accent-color: var(--lt-blue);
+  margin: 0;
+}
+.cfm__tool--on {
+  background: var(--lt-blue-lighten-4);
+  border-color: var(--lt-blue-lighten-2);
+  color: var(--lt-blue);
+}
+
+.cfm__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--lt-space-3);
+  margin-top: var(--lt-space-2);
+  padding-top: var(--lt-space-4);
+  border-top: 1px solid var(--lt-color-border);
+}
+
+/* Success state */
+.cfm-done {
+  text-align: center;
+  padding: var(--lt-space-2) 0;
+}
+.cfm-done__icon {
+  font-size: 44px;
+  margin-bottom: var(--lt-space-3);
+}
+.cfm-done__title {
+  font-family: var(--lt-font-display);
+  font-size: var(--lt-fs-lg);
+  color: var(--lt-deep-blue);
+}
+.cfm-done__sub {
+  max-width: 46ch;
+  margin: var(--lt-space-2) auto 0;
+  color: var(--lt-text-secondary);
+  font-size: var(--lt-fs-sm);
+  line-height: 1.6;
+}
+.cfm-done__sub code {
+  background: var(--lt-gray);
+  border: 1px solid var(--lt-color-border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.9em;
+}
+.cfm-done__actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--lt-space-3);
+  margin-top: var(--lt-space-5);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .cfm__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -15,6 +15,7 @@ import { writeFileSync } from "node:fs";
 import * as XLSX from "xlsx";
 import { CAPABILITIES } from "../src/data/automationCapabilities.js";
 import { AI_TOOLS } from "../src/data/aiTools.js";
+import { MASTER_XLSX } from "../data-source.mjs";
 
 const has = (s, ...words) =>
   words.some((w) => s.toLowerCase().includes(w.toLowerCase()));
@@ -106,9 +107,8 @@ const wb = XLSX.utils.book_new();
 XLSX.utils.book_append_sheet(wb, capsSheet, "Capabilities");
 XLSX.utils.book_append_sheet(wb, toolsSheet, "Tools");
 
-const outUrl = new URL("../../ai_automation_master.xlsx", import.meta.url);
 const buf = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
-writeFileSync(outUrl, buf);
+writeFileSync(MASTER_XLSX, buf);
 
 const totalChecks = capRows.reduce(
   (n, r) => n + toolNames.filter((t) => r[t] === "X").length,

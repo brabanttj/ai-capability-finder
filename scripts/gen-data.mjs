@@ -6,11 +6,11 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import * as XLSX from "xlsx";
+import { MASTER_XLSX } from "../data-source.mjs";
 
 const FIXED = ["Department", "Category", "Capability", "Description"];
 
-const masterUrl = new URL("../../ai_automation_master.xlsx", import.meta.url);
-const wb = XLSX.read(readFileSync(masterUrl), { type: "buffer" });
+const wb = XLSX.read(readFileSync(MASTER_XLSX), { type: "buffer" });
 
 // ---- Tools reference sheet -------------------------------------------------
 const toolRows = XLSX.utils.sheet_to_json(wb.Sheets["Tools"], { defval: "" });
