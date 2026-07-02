@@ -57,20 +57,25 @@ function useTypewriter(text, on, speed = 18) {
 
 export default function InteractiveHero() {
   const [active, setActive] = useState(null);
-  const [hint, setHint] = useState(0);
   const [engaged, setEngaged] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [requestOpen, setRequestOpen] = useState(false);
   const typed = useTypewriter(active != null ? WORDS[active].frag : "", active != null);
   const toolsAvail = TOOLS.filter((t) => t.available).length;
 
-  // Auto-cycle a color "wave" across the words until the user interacts.
+  // Auto-highlight each word in sentence order (showing its reveal, like hover)
+  // until the user interacts.
   useEffect(() => {
     if (engaged) return undefined;
-    const id = setInterval(
-      () => setHint((h) => (h + 1) % (WORDS.length + 2)),
-      850
-    );
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      return undefined;
+    }
+    let i = 0;
+    setActive(0);
+    const id = setInterval(() => {
+      i = (i + 1) % WORDS.length;
+      setActive(i);
+    }, 3200);
     return () => clearInterval(id);
   }, [engaged]);
 
@@ -87,9 +92,7 @@ export default function InteractiveHero() {
           {WORDS.map((w, i) => (
             <span
               key={w.text}
-              className={`hw${active === i ? " hw--on" : ""}${
-                !engaged && hint === i ? " hw--hint" : ""
-              }`}
+              className={`hw${active === i ? " hw--on" : ""}`}
               style={{ "--accent": w.accent }}
               tabIndex={0}
               role="button"
