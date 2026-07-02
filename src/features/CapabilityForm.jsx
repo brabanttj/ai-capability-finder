@@ -10,17 +10,7 @@ import "./CapabilityForm.css";
 
 const AVAILABLE = TOOLS.filter((t) => t.available);
 const TOOL_NAMES = TOOLS.map((t) => t.name);
-const HEADER = [
-  "Department",
-  "Category",
-  "Capability",
-  "Description",
-  "Author",
-  "URL",
-  ...TOOL_NAMES,
-];
-const ALL_CATEGORIES = [...new Set(CAPABILITIES.map((c) => c.category))].sort();
-
+const HEADER = ["Department", "Category", "Capability", "Author", "URL", ...TOOL_NAMES];
 // Existing capabilities for the picker (sorted by department, then name)
 const EXISTING = [...CAPABILITIES].sort(
   (a, b) =>
@@ -38,9 +28,8 @@ export default function CapabilityForm({ onClose }) {
     capability: "",
     department: "",
     category: "",
-    description: "",
   });
-  const [tools, setTools] = useState(() => new Set());
+  const [tool, setTool] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -58,41 +47,31 @@ export default function CapabilityForm({ onClose }) {
           department: chosen.department,
           category: chosen.category,
           capability: chosen.capability,
-          description: chosen.description,
         }
       : {
           department: form.department.trim(),
           category: form.category.trim(),
           capability: form.capability.trim(),
-          description: form.description.trim(),
         };
 
-  const catSuggestions =
-    (form.department && CATEGORIES_BY_DEPARTMENT[form.department]) || ALL_CATEGORIES;
+  // Category choices are constrained to the taxonomy for the chosen department.
+  const catOptions = CATEGORIES_BY_DEPARTMENT[form.department] || [];
 
-  const baseValid = author.trim() && url.trim() && tools.size > 0;
+  const baseValid = author.trim() && url.trim() && tool;
   const valid =
     mode === "existing"
       ? Boolean(chosen) && baseValid
-      : eff.capability && eff.department && eff.description && baseValid;
+      : eff.capability && eff.department && eff.category && baseValid;
 
   const updForm = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
-  const toggleTool = (name) =>
-    setTools((prev) => {
-      const next = new Set(prev);
-      if (next.has(name)) next.delete(name);
-      else next.add(name);
-      return next;
-    });
 
   const buildRow = () => [
     eff.department,
     eff.category,
     eff.capability,
-    eff.description,
     author.trim(),
     url.trim(),
-    ...TOOL_NAMES.map((n) => (tools.has(n) ? "X" : "")),
+    ...TOOL_NAMES.map((n) => (n === tool ? "X" : "")),
   ];
   const downloadCsv = () => {
     const csv = [HEADER.map(csvEscape).join(","), buildRow().map(csvEscape).join(",")].join("\n");
@@ -115,7 +94,7 @@ export default function CapabilityForm({ onClose }) {
     e.preventDefault();
     if (!valid || submitting) return;
     setSubmitting(true);
-    const payload = { ...eff, tools: [...tools], author: author.trim(), url: url.trim() };
+    const payload = { ...eff, tools: [tool], author: author.trim(), url: url.trim() };
     let outcome = "local";
     try {
       const res = await fetch("/api/add-capability", {
@@ -168,8 +147,8 @@ export default function CapabilityForm({ onClose }) {
             <>
               <p className="cfm-done__title">Your guide was added</p>
               <p className="cfm-done__sub">
-                Your way of using {[...tools].join(", ")} for “{eff.capability}”
-                is now listed. Run <code>publish-changes.bat</code> to publish.
+                Your way of using {tool} for “{eff.capability}” is now listed.
+                Run <code>publish-changes.bat</code> to publish.
               </p>
             </>
           )}
@@ -228,7 +207,11 @@ export default function CapabilityForm({ onClose }) {
                   </option>
                 ))}
               </select>
-              {chosen && <span className="cfm__hint">{chosen.description}</span>}
+              {chosen && (
+                <span className="cfm__hint">
+                  {chosen.department} · {chosen.category}
+                </span>
+              )}
             </label>
           ) : (
             <>
@@ -245,64 +228,58 @@ export default function CapabilityForm({ onClose }) {
               <div className="cfm__grid">
                 <label className="lt-field">
                   <span className="lt-field__label">Department *</span>
-                  <input
-                    className="lt-input"
-                    list="cfm-departments"
+                  <select
+                    className="lt-select"
                     value={form.department}
-                    onChange={updForm("department")}
-                    placeholder="e.g. Product Management"
+                    onChange={(e) =>
+                      setForm((f) => ({ ...f, department: e.target.value, category: "" }))
+                    }
                     required
-                  />
-                  <datalist id="cfm-departments">
+                  >
+                    <option value="">Choose a department…</option>
                     {DEPARTMENTS.map((d) => (
-                      <option key={d} value={d} />
+                      <option key={d} value={d}>
+                        {d}
+                      </option>
                     ))}
-                  </datalist>
+                  </select>
                 </label>
                 <label className="lt-field">
-                  <span className="lt-field__label">Category</span>
-                  <input
-                    className="lt-input"
-                    list="cfm-categories"
+                  <span className="lt-field__label">Category *</span>
+                  <select
+                    className="lt-select"
                     value={form.category}
                     onChange={updForm("category")}
-                    placeholder="e.g. Execution"
-                  />
-                  <datalist id="cfm-categories">
-                    {catSuggestions.map((c) => (
-                      <option key={c} value={c} />
+                    disabled={!form.department}
+                    required
+                  >
+                    <option value="">
+                      {form.department ? "Choose a category…" : "Pick a department first"}
+                    </option>
+                    {catOptions.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
                     ))}
-                  </datalist>
+                  </select>
                 </label>
               </div>
-              <label className="lt-field">
-                <span className="lt-field__label">Description *</span>
-                <textarea
-                  className="lt-input cfm__textarea"
-                  value={form.description}
-                  onChange={updForm("description")}
-                  placeholder="One line on what this automates"
-                  rows={2}
-                  required
-                />
-              </label>
             </>
           )}
 
           <div className="lt-field">
-            <span className="lt-field__label">
-              AI tool(s) you use for this * ({tools.size} selected)
-            </span>
+            <span className="lt-field__label">AI tool you use for this *</span>
             <div className="cfm__tools">
               {AVAILABLE.map((t) => (
                 <label
                   key={t.name}
-                  className={`cfm__tool${tools.has(t.name) ? " cfm__tool--on" : ""}`}
+                  className={`cfm__tool${tool === t.name ? " cfm__tool--on" : ""}`}
                 >
                   <input
-                    type="checkbox"
-                    checked={tools.has(t.name)}
-                    onChange={() => toggleTool(t.name)}
+                    type="radio"
+                    name="cfm-tool"
+                    checked={tool === t.name}
+                    onChange={() => setTool(t.name)}
                   />
                   <span aria-hidden="true">{t.icon}</span> {t.name}
                 </label>

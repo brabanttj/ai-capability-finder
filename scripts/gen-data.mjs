@@ -60,7 +60,6 @@ const CAPABILITIES = capRows
       department,
       category: String(r.Category).trim(),
       capability,
-      description: String(r.Description ?? "").trim(),
       // Per-capability enabled tools: column checked AND tool available
       tools: toolColumns.filter(
         (name) => isOn(r[name]) && (toolByName.get(name)?.available ?? true)

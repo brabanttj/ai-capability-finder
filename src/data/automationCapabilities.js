@@ -117,7 +117,6 @@ export const CAPABILITIES = [
     "department": "Human Resources",
     "category": "Talent Acquisition",
     "capability": "Candidate sourcing",
-    "description": "AI sourcing from LinkedIn, resumes, databases",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -157,7 +156,6 @@ export const CAPABILITIES = [
     "department": "Human Resources",
     "category": "Talent Acquisition",
     "capability": "Resume screening",
-    "description": "Automated resume parsing and ranking",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -187,7 +185,6 @@ export const CAPABILITIES = [
     "department": "Human Resources",
     "category": "Employee Experience",
     "capability": "Onboarding workflows",
-    "description": "Automated onboarding checklists and comms",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -211,7 +208,6 @@ export const CAPABILITIES = [
     "department": "Human Resources",
     "category": "Employee Experience",
     "capability": "Employee sentiment analysis",
-    "description": "Analyze surveys, Slack, email tone",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -224,7 +220,6 @@ export const CAPABILITIES = [
     "department": "Human Resources",
     "category": "People Ops",
     "capability": "Policy management",
-    "description": "Auto-generate and update HR policies",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -237,7 +232,6 @@ export const CAPABILITIES = [
     "department": "Finance",
     "category": "Planning",
     "capability": "Revenue forecasting",
-    "description": "Predict revenue using historical + external data",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -251,7 +245,6 @@ export const CAPABILITIES = [
     "department": "Finance",
     "category": "Operations",
     "capability": "Invoice processing",
-    "description": "OCR + classification + routing",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -265,7 +258,6 @@ export const CAPABILITIES = [
     "department": "Accounting",
     "category": "Close Process",
     "capability": "Account reconciliation",
-    "description": "Auto-match transactions and flag anomalies",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -279,7 +271,6 @@ export const CAPABILITIES = [
     "department": "Accounting",
     "category": "Compliance",
     "capability": "Audit preparation",
-    "description": "Auto-compile audit trails and docs",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -294,7 +285,6 @@ export const CAPABILITIES = [
     "department": "Software Engineering",
     "category": "Development",
     "capability": "Code writing",
-    "description": "Assist engineers with code generation",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -332,7 +322,6 @@ export const CAPABILITIES = [
     "department": "Software Engineering",
     "category": "QA",
     "capability": "Automated test generation",
-    "description": "Generate unit/integration tests",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -346,7 +335,6 @@ export const CAPABILITIES = [
     "department": "Software Engineering",
     "category": "DevOps",
     "capability": "Pipeline automation",
-    "description": "Optimize and manage CI/CD pipelines",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -360,7 +348,6 @@ export const CAPABILITIES = [
     "department": "Software Engineering",
     "category": "Maintenance",
     "capability": "Bug detection",
-    "description": "AI-assisted debugging and root cause analysis",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -374,7 +361,6 @@ export const CAPABILITIES = [
     "department": "Tech Ops",
     "category": "Infrastructure",
     "capability": "System monitoring",
-    "description": "Detect anomalies in infra metrics",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -389,7 +375,6 @@ export const CAPABILITIES = [
     "department": "Tech Ops",
     "category": "Security",
     "capability": "Security monitoring",
-    "description": "Detect unusual access or threats",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -402,7 +387,6 @@ export const CAPABILITIES = [
     "department": "Tech Ops",
     "category": "Support",
     "capability": "Incident triage",
-    "description": "Auto-prioritize and route incidents",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -415,7 +399,6 @@ export const CAPABILITIES = [
     "department": "Product Management",
     "category": "Discovery",
     "capability": "User research synthesis",
-    "description": "Summarize interviews and feedback",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -428,7 +411,6 @@ export const CAPABILITIES = [
     "department": "Product Management",
     "category": "Planning",
     "capability": "Roadmap generation",
-    "description": "Suggest prioritization based on data",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -443,7 +425,6 @@ export const CAPABILITIES = [
     "department": "Product Management",
     "category": "Execution",
     "capability": "PRD drafting",
-    "description": "Auto-generate product requirement docs",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -456,7 +437,6 @@ export const CAPABILITIES = [
     "department": "Design/UX",
     "category": "Research",
     "capability": "User testing analysis",
-    "description": "Summarize usability tests",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -471,7 +451,6 @@ export const CAPABILITIES = [
     "department": "Design/UX",
     "category": "Design",
     "capability": "Wireframe generation",
-    "description": "Generate UI layouts from prompts",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -484,7 +463,6 @@ export const CAPABILITIES = [
     "department": "Design/UX",
     "category": "Content",
     "capability": "Microcopy generation",
-    "description": "Generate UX copy variations",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -497,7 +475,6 @@ export const CAPABILITIES = [
     "department": "Data Engineering",
     "category": "Pipelines",
     "capability": "Data pipeline automation",
-    "description": "Build/optimize pipelines",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -514,7 +491,6 @@ export const CAPABILITIES = [
     "department": "Data Engineering",
     "category": "Quality",
     "capability": "Data quality checks",
-    "description": "Detect anomalies and missing data",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -531,7 +507,6 @@ export const CAPABILITIES = [
     "department": "Reporting",
     "category": "Analytics",
     "capability": "Dashboard generation",
-    "description": "Auto-create dashboards from queries",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -556,7 +531,6 @@ export const CAPABILITIES = [
     "department": "Reporting",
     "category": "Insights",
     "capability": "Insight generation",
-    "description": "Auto-explain trends and anomalies",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -570,7 +544,6 @@ export const CAPABILITIES = [
     "department": "Strategy",
     "category": "Market Intelligence",
     "capability": "Competitive analysis",
-    "description": "Analyze competitors and market trends",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -584,7 +557,6 @@ export const CAPABILITIES = [
     "department": "Strategy",
     "category": "Planning",
     "capability": "Scenario simulation",
-    "description": "Model business scenarios",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -598,7 +570,6 @@ export const CAPABILITIES = [
     "department": "Account Management",
     "category": "Client Ops",
     "capability": "Client reporting",
-    "description": "Auto-generate reports",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -614,7 +585,6 @@ export const CAPABILITIES = [
     "department": "Account Management",
     "category": "Engagement",
     "capability": "Client communication",
-    "description": "Draft emails and updates",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -628,7 +598,6 @@ export const CAPABILITIES = [
     "department": "Business Development",
     "category": "Lead Gen",
     "capability": "Lead identification",
-    "description": "Find and qualify leads",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -642,7 +611,6 @@ export const CAPABILITIES = [
     "department": "Business Development",
     "category": "Outreach",
     "capability": "Outreach personalization",
-    "description": "Personalized outreach emails",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -656,7 +624,6 @@ export const CAPABILITIES = [
     "department": "Copywriting",
     "category": "Content",
     "capability": "Ad copy generation",
-    "description": "Generate ad variants",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -686,7 +653,6 @@ export const CAPABILITIES = [
     "department": "Copywriting",
     "category": "Content",
     "capability": "SEO optimization",
-    "description": "Optimize content for search",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -699,7 +665,6 @@ export const CAPABILITIES = [
     "department": "Copywriting",
     "category": "Content",
     "capability": "Content editing",
-    "description": "Rewrite and improve tone",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -712,7 +677,6 @@ export const CAPABILITIES = [
     "department": "Legal",
     "category": "Contracts",
     "capability": "Contract analysis",
-    "description": "Summarize and flag risks",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -732,7 +696,6 @@ export const CAPABILITIES = [
     "department": "Legal",
     "category": "Compliance",
     "capability": "Regulatory monitoring",
-    "description": "Track regulatory changes",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -746,7 +709,6 @@ export const CAPABILITIES = [
     "department": "Performance Marketing",
     "category": "Acquisition",
     "capability": "Campaign optimization",
-    "description": "Optimize bids and targeting",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -760,7 +722,6 @@ export const CAPABILITIES = [
     "department": "Performance Marketing",
     "category": "Creative",
     "capability": "Creative testing",
-    "description": "Generate/test ad creatives",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -776,7 +737,6 @@ export const CAPABILITIES = [
     "department": "Performance Marketing",
     "category": "Analytics",
     "capability": "Attribution modeling",
-    "description": "Optimize attribution models",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -792,7 +752,6 @@ export const CAPABILITIES = [
     "department": "Sales",
     "category": "Pipeline",
     "capability": "CRM automation",
-    "description": "Update and manage CRM entries",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -807,7 +766,6 @@ export const CAPABILITIES = [
     "department": "Sales",
     "category": "Enablement",
     "capability": "Sales coaching",
-    "description": "Analyze calls and suggest improvements",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -820,7 +778,6 @@ export const CAPABILITIES = [
     "department": "Sales",
     "category": "Forecasting",
     "capability": "Sales forecasting",
-    "description": "Predict deal outcomes",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -835,7 +792,6 @@ export const CAPABILITIES = [
     "department": "Customer Support",
     "category": "Support Ops",
     "capability": "Chatbots",
-    "description": "Automate responses",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -849,7 +805,6 @@ export const CAPABILITIES = [
     "department": "Customer Support",
     "category": "Quality",
     "capability": "Support QA",
-    "description": "Analyze support quality",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",
@@ -863,7 +818,6 @@ export const CAPABILITIES = [
     "department": "Customer Support",
     "category": "Insights",
     "capability": "Customer insights",
-    "description": "Extract themes from tickets",
     "tools": [
       "ChatGPT Enterprise",
       "Claude",

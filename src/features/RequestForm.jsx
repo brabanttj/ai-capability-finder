@@ -114,18 +114,18 @@ export default function RequestForm({ onClose }) {
 
           <label className="lt-field">
             <span className="lt-field__label">Your department</span>
-            <input
-              className="lt-input"
-              list="rf-departments"
+            <select
+              className="lt-select"
               value={form.department}
               onChange={upd("department")}
-              placeholder="e.g. Sales"
-            />
-            <datalist id="rf-departments">
+            >
+              <option value="">Choose a department…</option>
               {DEPARTMENTS.map((d) => (
-                <option key={d} value={d} />
+                <option key={d} value={d}>
+                  {d}
+                </option>
               ))}
-            </datalist>
+            </select>
           </label>
 
           <label className="lt-field">

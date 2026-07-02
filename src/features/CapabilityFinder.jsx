@@ -74,7 +74,6 @@ export default function CapabilityFinder() {
       if (q) {
         const hit =
           row.capability.toLowerCase().includes(q) ||
-          row.description.toLowerCase().includes(q) ||
           row.category.toLowerCase().includes(q) ||
           row.department.toLowerCase().includes(q);
         if (!hit) return false;
@@ -325,7 +324,6 @@ function CapabilityCard({ row, accent, onSelect, total, documented }) {
           {row.category}
         </span>
         <h3 className="cap-card__title">{row.capability}</h3>
-        <p className="cap-card__desc">{row.description}</p>
         <div className="cap-card__tools" aria-label="Tools with guides">
           {documented.slice(0, 6).map((t) => (
             <span key={t.name} className="cap-card__toolchip" title={t.name} aria-hidden="true">
@@ -429,11 +427,6 @@ function CapabilityModal({ capability, onClose, voted, wayCount, toggleWay }) {
       subtitle={`${meta.icon} ${capability.department} · ${capability.category}`}
       onClose={onClose}
     >
-      <section className="cm-section">
-        <h4 className="cm-section__title">Description</h4>
-        <p className="cm-desc">{capability.description}</p>
-      </section>
-
       <section className="cm-section">
         <h4 className="cm-section__title">
           Tools people use for this{" "}
