@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { CAPABILITIES, DEPARTMENTS, TOOLS } from "../data/automationCapabilities.js";
 import CapabilityForm from "./CapabilityForm.jsx";
+import RequestForm from "./RequestForm.jsx";
 import "./InteractiveHero.css";
 
 /* Each word begins its own sentence, revealed on hover/focus. */
@@ -36,6 +37,7 @@ export default function InteractiveHero() {
   const [hint, setHint] = useState(0);
   const [engaged, setEngaged] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
+  const [requestOpen, setRequestOpen] = useState(false);
   const typed = useTypewriter(active != null ? WORDS[active].frag : "", active != null);
   const toolsAvail = TOOLS.filter((t) => t.available).length;
 
@@ -106,14 +108,23 @@ export default function InteractiveHero() {
             <span className="hero__share-ic" aria-hidden="true">✦</span>
             Share how you AI
           </button>
-          <span className="hero__stats">
-            {CAPABILITIES.length} capabilities · {DEPARTMENTS.length} departments ·{" "}
-            {toolsAvail} AI tools
-          </span>
+          <button
+            type="button"
+            className="hero__request"
+            onClick={() => setRequestOpen(true)}
+          >
+            Request a capability
+          </button>
+        </div>
+
+        <div className="hero__stats">
+          {CAPABILITIES.length} capabilities · {DEPARTMENTS.length} departments ·{" "}
+          {toolsAvail} AI tools
         </div>
       </div>
 
       {formOpen && <CapabilityForm onClose={() => setFormOpen(false)} />}
+      {requestOpen && <RequestForm onClose={() => setRequestOpen(false)} />}
     </section>
   );
 }

@@ -90,6 +90,15 @@ export default function CapabilityFinder() {
     setCategory(ALL); // reset category when department changes
   };
 
+  const hasFilters =
+    searchTerm || department !== ALL || category !== ALL || sort !== "department";
+  const clearAll = () => {
+    setSearchTerm("");
+    setDepartment(ALL);
+    setCategory(ALL);
+    setSort("department");
+  };
+
   const exportToCSV = () => {
     const headers = ["Department", "Category", "Capability / Task", "Description"];
     const lines = [headers.join(",")];
@@ -156,6 +165,33 @@ export default function CapabilityFinder() {
             <option value="popular">Sort: Most popular</option>
           </Select>
         </div>
+        {hasFilters && (
+          <div className="cf-chips">
+            {searchTerm && (
+              <button className="cf-chip" onClick={() => setSearchTerm("")}>
+                “{searchTerm}” <span aria-hidden="true">×</span>
+              </button>
+            )}
+            {department !== ALL && (
+              <button className="cf-chip" onClick={() => onDepartmentChange(ALL)}>
+                {department} <span aria-hidden="true">×</span>
+              </button>
+            )}
+            {category !== ALL && (
+              <button className="cf-chip" onClick={() => setCategory(ALL)}>
+                {category} <span aria-hidden="true">×</span>
+              </button>
+            )}
+            {sort !== "department" && (
+              <button className="cf-chip" onClick={() => setSort("department")}>
+                Most popular <span aria-hidden="true">×</span>
+              </button>
+            )}
+            <button className="cf-chip cf-chip--clear" onClick={clearAll}>
+              Clear all
+            </button>
+          </div>
+        )}
         <div className="cf-toolbar__foot">
           <span className="cf-count">
             <strong>{filtered.length}</strong> capabilit
@@ -246,6 +282,7 @@ export default function CapabilityFinder() {
 }
 
 function CapabilityCard({ row, accent, onSelect, count, voted, onVote }) {
+  const enabledTools = TOOLS.filter((t) => row.tools.includes(t.name));
   return (
     <Card
       pad={false}
@@ -262,21 +299,29 @@ function CapabilityCard({ row, accent, onSelect, count, voted, onVote }) {
         }
       }}
     >
-      <button
-        type="button"
-        className="cap-card__tool-btn"
-        aria-label={`View tools for ${row.capability}`}
-        onClick={(e) => {
-          e.stopPropagation();
-          onSelect();
-        }}
-      >
-        🔧
-      </button>
       <div className="cap-card__body">
-        <span className="cap-card__cat">{row.category}</span>
+        <span className="cap-card__cat" style={{ color: accent }}>
+          {row.category}
+        </span>
         <h3 className="cap-card__title">{row.capability}</h3>
         <p className="cap-card__desc">{row.description}</p>
+        <div className="cap-card__tools" aria-label="Enabled AI tools">
+          {enabledTools.slice(0, 5).map((t) => (
+            <span key={t.name} className="cap-card__toolchip" title={t.name} aria-hidden="true">
+              {t.icon}
+            </span>
+          ))}
+          {enabledTools.length > 5 && (
+            <span className="cap-card__toolchip cap-card__toolchip--more">
+              +{enabledTools.length - 5}
+            </span>
+          )}
+          {enabledTools.length === 0 && (
+            <span className="cap-card__notool">No tools enabled yet</span>
+          )}
+        </div>
+      </div>
+      <div className="cap-card__foot">
         <button
           type="button"
           className={`cap-vote${voted ? " cap-vote--on" : ""}`}
@@ -291,6 +336,7 @@ function CapabilityCard({ row, accent, onSelect, count, voted, onVote }) {
           <span className="cap-vote__arrow" aria-hidden="true">▲</span>
           <span className="cap-vote__count">{count}</span>
         </button>
+        <span className="cap-card__view">🔧 View tools</span>
       </div>
     </Card>
   );

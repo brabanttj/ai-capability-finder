@@ -831,59 +831,59 @@ export const DEPARTMENT_META = {
     "icon": "📒"
   },
   "Software Engineering": {
-    "color": "#002A4A",
+    "color": "#4B5FB5",
     "icon": "💻"
   },
   "Tech Ops": {
-    "color": "#00D084",
+    "color": "#C9822E",
     "icon": "🖥️"
   },
   "Product Management": {
-    "color": "#044D4D",
+    "color": "#B24A6B",
     "icon": "🧭"
   },
   "Design/UX": {
-    "color": "#0069BA",
+    "color": "#1E9CB8",
     "icon": "🎨"
   },
   "Data Engineering": {
-    "color": "#08C177",
+    "color": "#2F8F4E",
     "icon": "🗄️"
   },
   "Reporting": {
-    "color": "#078181",
+    "color": "#6C5CB8",
     "icon": "📊"
   },
   "Strategy": {
-    "color": "#00D084",
+    "color": "#A9832C",
     "icon": "♟️"
   },
   "Account Management": {
-    "color": "#0069BA",
+    "color": "#0E6E78",
     "icon": "🤝"
   },
   "Business Development": {
-    "color": "#044D4D",
+    "color": "#3F7BC4",
     "icon": "📈"
   },
   "Copywriting": {
-    "color": "#08C177",
+    "color": "#B3573C",
     "icon": "✍️"
   },
   "Legal": {
-    "color": "#078181",
+    "color": "#12A594",
     "icon": "⚖️"
   },
   "Performance Marketing": {
-    "color": "#002A4A",
+    "color": "#8457AA",
     "icon": "📣"
   },
   "Sales": {
-    "color": "#00D084",
+    "color": "#2A7DA3",
     "icon": "💼"
   },
   "Customer Support": {
-    "color": "#0069BA",
+    "color": "#C25E86",
     "icon": "🎧"
   }
 };

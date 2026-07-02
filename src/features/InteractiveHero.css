@@ -114,7 +114,28 @@
   gap: var(--lt-space-4);
   margin-top: var(--lt-space-5);
 }
+/* Secondary "Request a capability" button */
+.hero__request {
+  padding: 13px 22px;
+  border-radius: var(--lt-radius-pill);
+  border: 1px solid var(--lt-gray-light-2);
+  background: var(--lt-white);
+  color: var(--lt-deep-blue);
+  font-family: var(--lt-font-body);
+  font-size: var(--lt-fs-sm);
+  font-weight: var(--lt-fw-bold);
+  cursor: pointer;
+  transition: border-color var(--lt-transition), color var(--lt-transition),
+    background var(--lt-transition);
+}
+.hero__request:hover {
+  border-color: var(--lt-blue);
+  color: var(--lt-blue);
+  background: var(--lt-blue-lighten-4);
+}
+
 .hero__stats {
+  margin-top: var(--lt-space-5);
   font-size: var(--lt-fs-sm);
   color: var(--lt-text-muted);
 }

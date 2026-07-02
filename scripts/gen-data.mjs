@@ -56,11 +56,12 @@ for (const k of Object.keys(categoriesByDepartment)) {
 }
 
 // Brand-palette accent + emoji per department
+// Curated, brand-anchored palette: distinct enough to scan, harmonious on white.
 const PALETTE = [
-  "#0069BA", "#08C177", "#078181", "#002A4A", "#00D084",
-  "#044D4D", "#0069BA", "#08C177", "#078181", "#00D084",
-  "#0069BA", "#044D4D", "#08C177", "#078181", "#002A4A",
-  "#00D084", "#0069BA",
+  "#0069BA", "#08C177", "#078181", "#4B5FB5", "#C9822E",
+  "#B24A6B", "#1E9CB8", "#2F8F4E", "#6C5CB8", "#A9832C",
+  "#0E6E78", "#3F7BC4", "#B3573C", "#12A594", "#8457AA",
+  "#2A7DA3", "#C25E86",
 ];
 const ICONS = {
   "Human Resources": "👥", Finance: "💰", Accounting: "📒",

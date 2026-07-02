@@ -87,6 +87,48 @@
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: var(--lt-space-3);
 }
+/* Active-filter chips */
+.cf-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: var(--lt-space-4);
+}
+.cf-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--lt-radius-pill);
+  border: 1px solid var(--lt-blue-lighten-2);
+  background: var(--lt-blue-lighten-4);
+  color: var(--lt-blue);
+  font-size: var(--lt-fs-xs);
+  font-weight: var(--lt-fw-bold);
+  cursor: pointer;
+  transition: background var(--lt-transition), border-color var(--lt-transition);
+}
+.cf-chip:hover {
+  background: var(--lt-blue);
+  color: #fff;
+  border-color: var(--lt-blue);
+}
+.cf-chip span {
+  font-size: 13px;
+  line-height: 1;
+}
+.cf-chip--clear {
+  background: transparent;
+  border-color: transparent;
+  color: var(--lt-text-muted);
+  text-decoration: underline;
+}
+.cf-chip--clear:hover {
+  background: transparent;
+  color: var(--lt-deep-blue);
+  border-color: transparent;
+}
+
 .cf-toolbar__foot {
   display: flex;
   align-items: center;
@@ -147,35 +189,16 @@
 }
 .cap-card {
   position: relative;
+  height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: box-shadow var(--lt-transition), transform var(--lt-transition);
-}
-.cap-card__tool-btn {
-  position: absolute;
-  top: var(--lt-space-3);
-  right: var(--lt-space-3);
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border-radius: var(--lt-radius-pill);
-  background: var(--lt-blue-lighten-4);
-  border: 1px solid var(--lt-blue-lighten-2);
-  font-size: 16px;
-  cursor: pointer;
-  transition: background var(--lt-transition), border-color var(--lt-transition),
-    transform var(--lt-transition);
-}
-.cap-card__tool-btn:hover {
-  background: var(--lt-blue);
-  border-color: var(--lt-blue);
-  transform: scale(1.08);
+  transition: box-shadow var(--lt-transition), transform var(--lt-transition),
+    border-color var(--lt-transition);
 }
 .cap-card:hover {
   box-shadow: var(--lt-shadow-md);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 .cap-card__body {
   flex: 1;
@@ -191,7 +214,6 @@
   text-transform: uppercase;
   color: var(--lt-teal);
   margin-bottom: var(--lt-space-2);
-  padding-right: 44px;
 }
 .cap-card__title {
   font-family: var(--lt-font-display);
@@ -199,18 +221,64 @@
   color: var(--lt-deep-blue);
   margin: 0 0 var(--lt-space-2);
   line-height: 1.2;
-  padding-right: 44px;
 }
 .cap-card__desc {
   font-size: var(--lt-fs-sm);
   color: var(--lt-text-secondary);
   line-height: 1.5;
 }
-
-/* Upvote button — pushed to the bottom-left of the card body */
-.cap-vote {
-  align-self: flex-start;
+/* Enabled-tool chips (info scent without opening the modal) */
+.cap-card__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
   margin-top: var(--lt-space-4);
+}
+.cap-card__toolchip {
+  width: 27px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--lt-gray);
+  border: 1px solid var(--lt-color-border);
+  font-size: 14px;
+}
+.cap-card__toolchip--more {
+  width: auto;
+  padding: 0 9px;
+  border-radius: var(--lt-radius-pill);
+  font-size: var(--lt-fs-xs);
+  font-weight: var(--lt-fw-bold);
+  color: var(--lt-text-muted);
+}
+.cap-card__notool {
+  font-size: var(--lt-fs-xs);
+  color: var(--lt-text-muted);
+  font-style: italic;
+}
+
+/* Card footer: upvote (left) + view-tools affordance (right) */
+.cap-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lt-space-2);
+  padding: var(--lt-space-3) var(--lt-space-5);
+  border-top: 1px solid var(--lt-color-border);
+  background: var(--lt-gray);
+}
+.cap-card__view {
+  font-size: var(--lt-fs-xs);
+  font-weight: var(--lt-fw-bold);
+  color: var(--lt-blue);
+  transition: transform var(--lt-transition);
+}
+.cap-card:hover .cap-card__view {
+  transform: translateX(3px);
+}
+.cap-vote {
   display: inline-flex;
   align-items: center;
   gap: 7px;

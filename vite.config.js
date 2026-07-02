@@ -54,6 +54,47 @@ function addCapabilityApi() {
           }
         });
       });
+
+      // POST /api/request-capability -> append to a "Requests" sheet
+      server.middlewares.use("/api/request-capability", (req, res, next) => {
+        if (req.method !== "POST") return next();
+        let body = "";
+        req.on("data", (c) => (body += c));
+        req.on("end", () => {
+          const send = (code, obj) => {
+            res.statusCode = code;
+            res.setHeader("Content-Type", "application/json");
+            res.end(JSON.stringify(obj));
+          };
+          try {
+            const data = JSON.parse(body || "{}");
+            if (!data.request) return send(400, { ok: false, error: "Missing request" });
+            const wb = XLSX.read(fs.readFileSync(MASTER), { type: "buffer" });
+            const REQ_HEADER = ["Submitted", "Request", "Department", "Details"];
+            const row = {
+              Submitted: new Date().toISOString().slice(0, 10),
+              Request: data.request,
+              Department: data.department || "",
+              Details: data.details || "",
+            };
+            let ws = wb.Sheets["Requests"];
+            if (!ws) {
+              ws = XLSX.utils.json_to_sheet([row], { header: REQ_HEADER });
+              XLSX.utils.book_append_sheet(wb, ws, "Requests");
+            } else {
+              XLSX.utils.sheet_add_json(ws, [row], {
+                skipHeader: true,
+                origin: -1,
+                header: REQ_HEADER,
+              });
+            }
+            fs.writeFileSync(MASTER, XLSX.write(wb, { bookType: "xlsx", type: "buffer" }));
+            send(200, { ok: true });
+          } catch (e) {
+            send(500, { ok: false, error: String((e && e.message) || e) });
+          }
+        });
+      });
     },
   };
 }
