@@ -5,6 +5,7 @@ import {
   CATEGORIES_BY_DEPARTMENT,
   DEPARTMENT_META,
   TOOLS,
+  REQUESTS,
 } from "../data/automationCapabilities.js";
 import {
   Card,
@@ -15,7 +16,8 @@ import {
   Modal,
 } from "../components/ui/index.js";
 import InteractiveHero from "./InteractiveHero.jsx";
-import { capId, baseCount, loadVoted, saveVoted } from "../lib/votes.js";
+import RequestsBoard from "./RequestsBoard.jsx";
+import { usageId, baseCount, loadVoted, saveVoted } from "../lib/votes.js";
 import "./CapabilityFinder.css";
 
 const ALL = "All";
@@ -27,11 +29,17 @@ export default function CapabilityFinder() {
   const [category, setCategory] = useState(ALL);
   const [sort, setSort] = useState("department");
   const [selected, setSelected] = useState(null);
+  const [view, setView] = useState("capabilities"); // "capabilities" | "requests"
   const [voted, setVoted] = useState(() => loadVoted());
 
-  const countOf = (cap) => baseCount(cap) + (voted.has(capId(cap)) ? 1 : 0);
-  const toggleVote = (cap) => {
-    const id = capId(cap);
+  // Upvotes live on individual "ways" (usage entries). A capability's score
+  // is the sum of its ways' upvotes.
+  const wayCount = (cap, tool, u) => {
+    const id = usageId(cap.department, cap.capability, tool, u.url);
+    return baseCount(id) + (voted.has(id) ? 1 : 0);
+  };
+  const toggleWay = (cap, tool, u) => {
+    const id = usageId(cap.department, cap.capability, tool, u.url);
     setVoted((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
@@ -40,6 +48,15 @@ export default function CapabilityFinder() {
       return next;
     });
   };
+  const capabilityTotal = (cap) => {
+    let sum = 0;
+    for (const [tool, ways] of Object.entries(cap.usage || {})) {
+      for (const u of ways) sum += wayCount(cap, tool, u);
+    }
+    return sum;
+  };
+  const documentedTools = (cap) =>
+    TOOLS.filter((t) => (cap.usage?.[t.name] || []).length > 0);
 
   // Category options cascade from the selected department
   const categoryOptions = useMemo(() => {
@@ -76,11 +93,13 @@ export default function CapabilityFinder() {
     return Array.from(map, ([dept, rows]) => ({ dept, rows }));
   }, [filtered]);
 
-  // Flat list sorted by upvotes, for the "Most popular" sort
+  // Flat list sorted by summed way-upvotes, for the "Most popular" sort
   const popular = useMemo(
     () =>
       [...filtered].sort(
-        (a, b) => countOf(b) - countOf(a) || a.capability.localeCompare(b.capability)
+        (a, b) =>
+          capabilityTotal(b) - capabilityTotal(a) ||
+          a.capability.localeCompare(b.capability)
       ),
     [filtered, voted]
   );
@@ -99,30 +118,35 @@ export default function CapabilityFinder() {
     setSort("department");
   };
 
-  const exportToCSV = () => {
-    const headers = ["Department", "Category", "Capability / Task", "Description"];
-    const lines = [headers.join(",")];
-    filtered.forEach((r) =>
-      lines.push(
-        [r.department, r.category, r.capability, r.description]
-          .map((v) => `"${String(v).replace(/"/g, '""')}"`)
-          .join(",")
-      )
-    );
-    const blob = new Blob([lines.join("\n")], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "ai-automation-capabilities.csv";
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <>
       <InteractiveHero />
       <div className="cf">
+        <div className="cf-tabs" role="tablist">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={view === "capabilities"}
+            className={`cf-tab${view === "capabilities" ? " cf-tab--on" : ""}`}
+            onClick={() => setView("capabilities")}
+          >
+            Capabilities
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={view === "requests"}
+            className={`cf-tab${view === "requests" ? " cf-tab--on" : ""}`}
+            onClick={() => setView("requests")}
+          >
+            Requests <span className="cf-tab__n">{REQUESTS.length}</span>
+          </button>
+        </div>
 
+        {view === "requests" ? (
+          <RequestsBoard />
+        ) : (
+          <>
       {/* Toolbar: search + Department + Category */}
       <Card className="cf-toolbar" id="finder">
         <div className="cf-toolbar__grid">
@@ -192,15 +216,6 @@ export default function CapabilityFinder() {
             </button>
           </div>
         )}
-        <div className="cf-toolbar__foot">
-          <span className="cf-count">
-            <strong>{filtered.length}</strong> capabilit
-            {filtered.length === 1 ? "y" : "ies"} found
-          </span>
-          <Button variant="secondary" size="sm" onClick={exportToCSV}>
-            Export to CSV
-          </Button>
-        </div>
       </Card>
 
       {/* Results */}
@@ -232,9 +247,8 @@ export default function CapabilityFinder() {
                   row={row}
                   accent={meta.color}
                   onSelect={() => setSelected(row)}
-                  count={countOf(row)}
-                  voted={voted.has(capId(row))}
-                  onVote={() => toggleVote(row)}
+                  total={capabilityTotal(row)}
+                  documented={documentedTools(row)}
                 />
               );
             })}
@@ -262,9 +276,8 @@ export default function CapabilityFinder() {
                     row={row}
                     accent={meta.color}
                     onSelect={() => setSelected(row)}
-                    count={countOf(row)}
-                    voted={voted.has(capId(row))}
-                    onVote={() => toggleVote(row)}
+                    total={capabilityTotal(row)}
+                    documented={documentedTools(row)}
                   />
                 ))}
               </div>
@@ -272,17 +285,25 @@ export default function CapabilityFinder() {
           );
         })
       )}
+          </>
+        )}
 
       {selected && (
-        <CapabilityModal capability={selected} onClose={() => setSelected(null)} />
+        <CapabilityModal
+          capability={selected}
+          onClose={() => setSelected(null)}
+          voted={voted}
+          wayCount={wayCount}
+          toggleWay={toggleWay}
+        />
       )}
       </div>
     </>
   );
 }
 
-function CapabilityCard({ row, accent, onSelect, count, voted, onVote }) {
-  const enabledTools = TOOLS.filter((t) => row.tools.includes(t.name));
+function CapabilityCard({ row, accent, onSelect, total, documented }) {
+  const wayCount = Object.values(row.usage || {}).reduce((n, arr) => n + arr.length, 0);
   return (
     <Card
       pad={false}
@@ -305,81 +326,102 @@ function CapabilityCard({ row, accent, onSelect, count, voted, onVote }) {
         </span>
         <h3 className="cap-card__title">{row.capability}</h3>
         <p className="cap-card__desc">{row.description}</p>
-        <div className="cap-card__tools" aria-label="Enabled AI tools">
-          {enabledTools.slice(0, 5).map((t) => (
+        <div className="cap-card__tools" aria-label="Tools with guides">
+          {documented.slice(0, 6).map((t) => (
             <span key={t.name} className="cap-card__toolchip" title={t.name} aria-hidden="true">
               {t.icon}
             </span>
           ))}
-          {enabledTools.length > 5 && (
+          {documented.length > 6 && (
             <span className="cap-card__toolchip cap-card__toolchip--more">
-              +{enabledTools.length - 5}
+              +{documented.length - 6}
             </span>
           )}
-          {enabledTools.length === 0 && (
-            <span className="cap-card__notool">No tools enabled yet</span>
+          {documented.length === 0 && (
+            <span className="cap-card__notool">No guides yet — be the first</span>
           )}
         </div>
       </div>
       <div className="cap-card__foot">
-        <button
-          type="button"
-          className={`cap-vote${voted ? " cap-vote--on" : ""}`}
-          aria-pressed={voted}
-          aria-label={`Upvote ${row.capability}${voted ? " (voted)" : ""}`}
-          title={voted ? "Remove your upvote" : "Upvote this capability"}
-          onClick={(e) => {
-            e.stopPropagation();
-            onVote();
-          }}
-        >
-          <span className="cap-vote__arrow" aria-hidden="true">▲</span>
-          <span className="cap-vote__count">{count}</span>
-        </button>
-        <span className="cap-card__view">🔧 View tools</span>
+        <span className="cap-stat" title="Total upvotes across all guides">
+          <span className="cap-stat__arrow" aria-hidden="true">▲</span>
+          {total}
+        </span>
+        <span className="cap-card__view">
+          {wayCount > 0 ? `${wayCount} guide${wayCount === 1 ? "" : "s"} →` : "Add a guide →"}
+        </span>
       </div>
     </Card>
   );
 }
 
-function ToolRow({ tool, enabled }) {
+function ToolBlock({ tool, usage, capability, voted, wayCount, toggleWay }) {
+  const ranked = usage
+    .map((u) => ({
+      u,
+      id: usageId(capability.department, capability.capability, tool.name, u.url),
+      n: wayCount(capability, tool.name, u),
+    }))
+    .sort((a, b) => b.n - a.n);
+
   return (
-    <div className={`lt-tool${enabled ? "" : " lt-tool--off"}`}>
-      <div className="lt-tool__info">
-        <span className="lt-tool__icon">{tool.icon}</span>
-        <div>
-          <div className="lt-tool__name">{tool.name}</div>
-          <div className="lt-tool__cat">{tool.category}</div>
+    <div className="cm-tool">
+      <div className="cm-tool__head">
+        <span className="cm-tool__icon">{tool.icon}</span>
+        <div className="cm-tool__meta">
+          <div className="cm-tool__name">{tool.name}</div>
+          <div className="cm-tool__cat">{tool.category}</div>
+        </div>
+        <div className="cm-tool__actions">
+          {tool.docUrl && (
+            <Button
+              variant="secondary"
+              size="sm"
+              href={tool.docUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Tool docs ↗
+            </Button>
+          )}
         </div>
       </div>
-      <div className="lt-tool__actions">
-        {enabled ? (
-          <>
-            <Badge tone="success">Enabled</Badge>
-            {tool.docUrl && (
-              <Button
-                variant="primary"
-                size="sm"
-                href={tool.docUrl}
-                target="_blank"
-                rel="noreferrer"
+      <div className="cm-ways">
+        <span className="cm-ways__label">
+          Ways people use it — upvote the ones that work
+        </span>
+        <ul className="cm-ways__list">
+          {ranked.map(({ u, id, n }) => (
+            <li key={id} className="cm-way">
+              <button
+                type="button"
+                className={`way-vote${voted.has(id) ? " way-vote--on" : ""}`}
+                aria-pressed={voted.has(id)}
+                aria-label={`Upvote ${u.author}'s guide`}
+                title={voted.has(id) ? "Remove your upvote" : "Upvote this guide"}
+                onClick={() => toggleWay(capability, tool.name, u)}
               >
-                View docs ↗
-              </Button>
-            )}
-          </>
-        ) : (
-          <Badge tone="neutral">Not enabled</Badge>
-        )}
+                <span className="way-vote__arrow" aria-hidden="true">▲</span>
+                <span className="way-vote__count">{n}</span>
+              </button>
+              <a className="cm-way__link" href={u.url} target="_blank" rel="noreferrer">
+                {u.author}
+                <span aria-hidden="true"> ↗</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
 }
 
-function CapabilityModal({ capability, onClose }) {
+function CapabilityModal({ capability, onClose, voted, wayCount, toggleWay }) {
   const meta = DEPARTMENT_META[capability.department] || FALLBACK_META;
-  const enabledNames = new Set(capability.tools);
-  const enabledTools = TOOLS.filter((t) => enabledNames.has(t.name));
+  // Only show tools that have at least one shared guide.
+  const documented = TOOLS.filter(
+    (t) => (capability.usage?.[t.name] || []).length > 0
+  );
 
   return (
     <Modal
@@ -394,28 +436,44 @@ function CapabilityModal({ capability, onClose }) {
 
       <section className="cm-section">
         <h4 className="cm-section__title">
-          Enabled AI tools for this capability{" "}
-          <span className="cm-count">{enabledTools.length}</span>
+          Tools people use for this{" "}
+          <span className="cm-count">{documented.length}</span>
         </h4>
-        {enabledTools.length > 0 ? (
+        {documented.length > 0 ? (
           <div className="cm-tools">
-            {enabledTools.map((tool) => (
-              <ToolRow key={tool.name} tool={tool} enabled />
+            {documented.map((tool) => (
+              <ToolBlock
+                key={tool.name}
+                tool={tool}
+                usage={capability.usage[tool.name]}
+                capability={capability}
+                voted={voted}
+                wayCount={wayCount}
+                toggleWay={toggleWay}
+              />
             ))}
           </div>
         ) : (
-          <p className="cm-desc">No AI tools are enabled for this capability yet.</p>
+          <p className="cm-desc">
+            No one has shared a guide for this yet. Be the first — add one via
+            “Share how you AI.”
+          </p>
         )}
       </section>
 
       <section className="cm-callout">
-        <strong>💡 How to use enabled tools</strong>
-        <ol>
-          <li>Pick an enabled AI tool from the list above.</li>
-          <li>Click <em>View docs</em> to open its integration guide.</li>
-          <li>Follow the setup steps for your use case.</li>
-          <li>Start automating this capability.</li>
-        </ol>
+        <strong>💡 Two kinds of docs</strong>
+        <ul>
+          <li>
+            <strong>Tool docs</strong> — how to get access &amp; support for the
+            tool itself (same for everyone).
+          </li>
+          <li>
+            <strong>Ways people use it</strong> — guides from colleagues; upvote
+            the approaches that work best so the top one rises.
+          </li>
+        </ul>
+        Have your own approach? Add it with <em>Share how you AI</em>.
       </section>
     </Modal>
   );

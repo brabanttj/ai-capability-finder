@@ -1,41 +1,47 @@
 /* ---------------------------------------------------------------------------
-   Per-browser upvotes, stored in localStorage.
+   Per-browser upvotes for individual "ways" of using a tool for a capability.
 
-   To make popularity GLOBAL (shared across all visitors), replace loadVoted /
-   saveVoted / the count source with a shared backend (e.g. Firebase Firestore
-   or Supabase) — the rest of the app calls these helpers, so only this file
-   would change.
+   Each usage entry (a person's guide) is upvotable. A capability's score is
+   the SUM of upvotes across all its ways. Stored in localStorage.
+
+   To make votes GLOBAL (shared across visitors), swap loadVoted/saveVoted +
+   the baseline for a shared backend (Firebase/Supabase) — the app only calls
+   these helpers, so only this file changes.
    --------------------------------------------------------------------------- */
 
-const KEY = "cap-upvotes-v1";
+export const WAYS_KEY = "way-upvotes-v1";
+export const REQUESTS_KEY = "request-upvotes-v1";
 
-export function capId(cap) {
-  return `${cap.department}|${cap.capability}`;
+export function usageId(department, capability, tool, url) {
+  return `${department}||${capability}||${tool}||${url}`;
 }
 
-// Deterministic baseline so "Most popular" is meaningful on a first visit.
+export function requestId(department, request) {
+  return `${department}||${request}`;
+}
+
+// Deterministic baseline so ordering is meaningful on a first visit.
 // (Sample/illustrative — true cross-user counts require a shared backend.)
-export function baseCount(cap) {
-  const s = capId(cap);
+export function baseCount(id) {
   let h = 2166136261;
-  for (let i = 0; i < s.length; i += 1) {
-    h ^= s.charCodeAt(i);
+  for (let i = 0; i < id.length; i += 1) {
+    h ^= id.charCodeAt(i);
     h = Math.imul(h, 16777619);
   }
-  return 6 + (Math.abs(h) % 55); // 6..60
+  return 2 + (Math.abs(h) % 28); // 2..29
 }
 
-export function loadVoted() {
+export function loadVoted(key = WAYS_KEY) {
   try {
-    return new Set(JSON.parse(localStorage.getItem(KEY) || "[]"));
+    return new Set(JSON.parse(localStorage.getItem(key) || "[]"));
   } catch {
     return new Set();
   }
 }
 
-export function saveVoted(set) {
+export function saveVoted(set, key = WAYS_KEY) {
   try {
-    localStorage.setItem(KEY, JSON.stringify([...set]));
+    localStorage.setItem(key, JSON.stringify([...set]));
   } catch {
     /* storage unavailable — votes just won't persist */
   }

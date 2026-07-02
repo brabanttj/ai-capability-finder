@@ -7,6 +7,39 @@
   flex-direction: column;
   gap: var(--lt-space-4);
 }
+
+/* Mode tabs: existing capability vs new */
+.cfm__tabs {
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+  background: var(--lt-gray);
+  border: 1px solid var(--lt-color-border);
+  border-radius: var(--lt-radius-pill);
+}
+.cfm__tab {
+  flex: 1;
+  padding: 9px 12px;
+  border: none;
+  border-radius: var(--lt-radius-pill);
+  background: transparent;
+  color: var(--lt-text-muted);
+  font-family: var(--lt-font-body);
+  font-size: var(--lt-fs-xs);
+  font-weight: var(--lt-fw-bold);
+  cursor: pointer;
+  transition: background var(--lt-transition), color var(--lt-transition);
+}
+.cfm__tab--on {
+  background: var(--lt-white);
+  color: var(--lt-blue);
+  box-shadow: var(--lt-shadow-sm);
+}
+.cfm__hint {
+  font-size: var(--lt-fs-xs);
+  color: var(--lt-text-muted);
+  font-style: italic;
+}
 .cfm__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

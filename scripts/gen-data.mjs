@@ -32,18 +32,43 @@ const toolColumns = Object.keys(capRows[0] ?? {}).filter(
 );
 const isOn = (v) => /^(x|yes|y|true|1|enabled)$/i.test(String(v).trim());
 
+// ---- Usage sheet: per-capability, per-tool author guides -------------------
+// Columns: Capability | Department | Tool | Author | URL  (many rows allowed)
+const usageRows = wb.Sheets["Usage"]
+  ? XLSX.utils.sheet_to_json(wb.Sheets["Usage"], { defval: "" })
+  : [];
+const usageMap = {}; // `${dept}|${cap}` -> { [tool]: [{ author, url }] }
+for (const u of usageRows) {
+  const cap = String(u.Capability ?? "").trim();
+  const tool = String(u.Tool ?? "").trim();
+  const url = String(u.URL ?? "").trim();
+  if (!cap || !tool || !url) continue;
+  const key = `${String(u.Department ?? "").trim()}|${cap}`;
+  (usageMap[key] ??= {});
+  (usageMap[key][tool] ??= []).push({
+    author: String(u.Author ?? "").trim() || "Anonymous",
+    url,
+  });
+}
+
 const CAPABILITIES = capRows
   .filter((r) => r.Capability)
-  .map((r) => ({
-    department: String(r.Department).trim(),
-    category: String(r.Category).trim(),
-    capability: String(r.Capability).trim(),
-    description: String(r.Description ?? "").trim(),
-    // Per-capability enabled tools: column checked AND tool available
-    tools: toolColumns.filter(
-      (name) => isOn(r[name]) && (toolByName.get(name)?.available ?? true)
-    ),
-  }));
+  .map((r) => {
+    const department = String(r.Department).trim();
+    const capability = String(r.Capability).trim();
+    return {
+      department,
+      category: String(r.Category).trim(),
+      capability,
+      description: String(r.Description ?? "").trim(),
+      // Per-capability enabled tools: column checked AND tool available
+      tools: toolColumns.filter(
+        (name) => isOn(r[name]) && (toolByName.get(name)?.available ?? true)
+      ),
+      // Author usage guides keyed by tool name
+      usage: usageMap[`${department}|${capability}`] || {},
+    };
+  });
 
 // ---- Derived lookups -------------------------------------------------------
 const departments = [...new Set(CAPABILITIES.map((r) => r.department))];
@@ -76,6 +101,20 @@ departments.forEach((d, i) => {
   departmentMeta[d] = { color: PALETTE[i % PALETTE.length], icon: ICONS[d] ?? "✨" };
 });
 
+// ---- Requests sheet: capabilities people wish existed ----------------------
+const REQUESTS = (
+  wb.Sheets["Requests"]
+    ? XLSX.utils.sheet_to_json(wb.Sheets["Requests"], { defval: "" })
+    : []
+)
+  .filter((r) => r.Request)
+  .map((r) => ({
+    submitted: String(r.Submitted ?? "").trim(),
+    request: String(r.Request).trim(),
+    department: String(r.Department ?? "").trim(),
+    details: String(r.Details ?? "").trim(),
+  }));
+
 const out = `/**
  * AI Automation Capabilities — generated from ai_automation_master.xlsx
  * (sheets "Capabilities" + "Tools"). Do not edit by hand; edit the workbook
@@ -91,10 +130,12 @@ export const DEPARTMENTS = ${JSON.stringify(departments, null, 2)};
 export const CATEGORIES_BY_DEPARTMENT = ${JSON.stringify(categoriesByDepartment, null, 2)};
 
 export const DEPARTMENT_META = ${JSON.stringify(departmentMeta, null, 2)};
+
+export const REQUESTS = ${JSON.stringify(REQUESTS, null, 2)};
 `;
 
 writeFileSync(new URL("../src/data/automationCapabilities.js", import.meta.url), out);
 const totalLinks = CAPABILITIES.reduce((n, c) => n + c.tools.length, 0);
 console.log(
-  `Wrote ${CAPABILITIES.length} capabilities, ${TOOLS.length} tools, ${totalLinks} per-capability tool enablements.`
+  `Wrote ${CAPABILITIES.length} capabilities, ${TOOLS.length} tools, ${totalLinks} per-capability tool enablements, ${REQUESTS.length} requests.`
 );

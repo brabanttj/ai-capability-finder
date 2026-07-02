@@ -125,7 +125,33 @@ export const CAPABILITIES = [
       "Power BI AI",
       "Snowflake Cortex",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {
+      "ChatGPT Enterprise": [
+        {
+          "author": "Jon Smith",
+          "url": "https://example.com/guides/jon-candidate-sourcing-chatgpt"
+        },
+        {
+          "author": "Mary Jones",
+          "url": "https://example.com/guides/mary-candidate-sourcing-chatgpt"
+        },
+        {
+          "author": "Wei Chen",
+          "url": "https://example.com/guides/wei-candidate-sourcing-chatgpt"
+        }
+      ],
+      "Claude": [
+        {
+          "author": "Priya Patel",
+          "url": "https://example.com/guides/priya-candidate-sourcing-claude"
+        },
+        {
+          "author": "Tomas Alvarez",
+          "url": "https://example.com/guides/tomas-candidate-sourcing-claude"
+        }
+      ]
+    }
   },
   {
     "department": "Human Resources",
@@ -137,7 +163,25 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {
+      "ChatGPT Enterprise": [
+        {
+          "author": "Dana Lee",
+          "url": "https://example.com/guides/dana-resume-screening-chatgpt"
+        },
+        {
+          "author": "Rachel Kim",
+          "url": "https://example.com/guides/rachel-resume-screening-chatgpt"
+        }
+      ],
+      "Claude": [
+        {
+          "author": "Omar Farouk",
+          "url": "https://example.com/guides/omar-resume-screening-claude"
+        }
+      ]
+    }
   },
   {
     "department": "Human Resources",
@@ -149,7 +193,19 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {
+      "Microsoft Copilot": [
+        {
+          "author": "Leah Park",
+          "url": "https://example.com/guides/leah-onboarding-copilot"
+        },
+        {
+          "author": "Devin Cross",
+          "url": "https://example.com/guides/devin-onboarding-copilot"
+        }
+      ]
+    }
   },
   {
     "department": "Human Resources",
@@ -161,7 +217,8 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Human Resources",
@@ -173,7 +230,8 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Finance",
@@ -186,7 +244,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "Power BI AI",
       "Snowflake Cortex"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Finance",
@@ -199,7 +258,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "Power BI AI",
       "Snowflake Cortex"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Accounting",
@@ -212,7 +272,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "Power BI AI",
       "Snowflake Cortex"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Accounting",
@@ -226,7 +287,8 @@ export const CAPABILITIES = [
       "Power BI AI",
       "Snowflake Cortex",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Software Engineering",
@@ -240,7 +302,31 @@ export const CAPABILITIES = [
       "Augment Code",
       "GitHub Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {
+      "GitHub Copilot": [
+        {
+          "author": "Alex Kim",
+          "url": "https://example.com/guides/alex-code-writing-copilot"
+        },
+        {
+          "author": "Sarah Bell",
+          "url": "https://example.com/guides/sarah-code-writing-copilot"
+        }
+      ],
+      "Augment Code": [
+        {
+          "author": "Sam Rivera",
+          "url": "https://example.com/guides/sam-code-writing-augment"
+        }
+      ],
+      "Claude": [
+        {
+          "author": "Nina Patel",
+          "url": "https://example.com/guides/nina-code-writing-claude"
+        }
+      ]
+    }
   },
   {
     "department": "Software Engineering",
@@ -253,7 +339,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "Augment Code",
       "GitHub Copilot"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Software Engineering",
@@ -266,7 +353,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "Augment Code",
       "GitHub Copilot"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Software Engineering",
@@ -279,7 +367,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "Augment Code",
       "GitHub Copilot"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Tech Ops",
@@ -293,7 +382,8 @@ export const CAPABILITIES = [
       "Power BI AI",
       "Azure AI",
       "Snowflake Cortex"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Tech Ops",
@@ -305,7 +395,8 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Azure AI"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Tech Ops",
@@ -317,7 +408,8 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Azure AI"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Product Management",
@@ -329,7 +421,8 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Product Management",
@@ -343,7 +436,8 @@ export const CAPABILITIES = [
       "Power BI AI",
       "Snowflake Cortex",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Product Management",
@@ -355,7 +449,8 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Design/UX",
@@ -369,7 +464,8 @@ export const CAPABILITIES = [
       "Augment Code",
       "GitHub Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Design/UX",
@@ -381,7 +477,8 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Design/UX",
@@ -393,7 +490,8 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Data Engineering",
@@ -409,7 +507,8 @@ export const CAPABILITIES = [
       "Power BI AI",
       "Azure AI",
       "Snowflake Cortex"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Data Engineering",
@@ -425,7 +524,8 @@ export const CAPABILITIES = [
       "Power BI AI",
       "Azure AI",
       "Snowflake Cortex"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Reporting",
@@ -438,7 +538,19 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "Power BI AI",
       "Snowflake Cortex"
-    ]
+    ],
+    "usage": {
+      "Power BI AI": [
+        {
+          "author": "Chris Doyle",
+          "url": "https://example.com/guides/chris-dashboards-powerbi"
+        },
+        {
+          "author": "Maria Gomez",
+          "url": "https://example.com/guides/maria-dashboards-powerbi"
+        }
+      ]
+    }
   },
   {
     "department": "Reporting",
@@ -451,7 +563,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "Power BI AI",
       "Snowflake Cortex"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Strategy",
@@ -464,7 +577,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "Power BI AI",
       "Snowflake Cortex"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Strategy",
@@ -477,7 +591,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "Power BI AI",
       "Snowflake Cortex"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Account Management",
@@ -492,7 +607,8 @@ export const CAPABILITIES = [
       "Snowflake Cortex",
       "HubSpot AI",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Account Management",
@@ -505,7 +621,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "HubSpot AI",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Business Development",
@@ -518,7 +635,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "HubSpot AI",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Business Development",
@@ -531,7 +649,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "HubSpot AI",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Copywriting",
@@ -543,7 +662,25 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {
+      "ChatGPT Enterprise": [
+        {
+          "author": "Zoe Adams",
+          "url": "https://example.com/guides/zoe-adcopy-chatgpt"
+        },
+        {
+          "author": "Ravi Shah",
+          "url": "https://example.com/guides/ravi-adcopy-chatgpt"
+        }
+      ],
+      "Grammarly Business": [
+        {
+          "author": "Ben Ortiz",
+          "url": "https://example.com/guides/ben-adcopy-grammarly"
+        }
+      ]
+    }
   },
   {
     "department": "Copywriting",
@@ -555,7 +692,8 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Copywriting",
@@ -567,7 +705,8 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Legal",
@@ -579,7 +718,15 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {
+      "Claude": [
+        {
+          "author": "Grace Liu",
+          "url": "https://example.com/guides/grace-contract-analysis-claude"
+        }
+      ]
+    }
   },
   {
     "department": "Legal",
@@ -592,7 +739,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "Azure AI",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Performance Marketing",
@@ -605,7 +753,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "HubSpot AI",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Performance Marketing",
@@ -620,7 +769,8 @@ export const CAPABILITIES = [
       "GitHub Copilot",
       "HubSpot AI",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Performance Marketing",
@@ -635,7 +785,8 @@ export const CAPABILITIES = [
       "Snowflake Cortex",
       "HubSpot AI",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Sales",
@@ -649,7 +800,8 @@ export const CAPABILITIES = [
       "Augment Code",
       "GitHub Copilot",
       "HubSpot AI"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Sales",
@@ -661,7 +813,8 @@ export const CAPABILITIES = [
       "Claude",
       "Microsoft Copilot",
       "HubSpot AI"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Sales",
@@ -675,7 +828,8 @@ export const CAPABILITIES = [
       "Power BI AI",
       "Snowflake Cortex",
       "HubSpot AI"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Customer Support",
@@ -688,7 +842,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "HubSpot AI",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Customer Support",
@@ -701,7 +856,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "HubSpot AI",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   },
   {
     "department": "Customer Support",
@@ -714,7 +870,8 @@ export const CAPABILITIES = [
       "Microsoft Copilot",
       "HubSpot AI",
       "Grammarly Business"
-    ]
+    ],
+    "usage": {}
   }
 ];
 
@@ -887,3 +1044,48 @@ export const DEPARTMENT_META = {
     "icon": "🎧"
   }
 };
+
+export const REQUESTS = [
+  {
+    "submitted": "2026-06-24",
+    "request": "Auto-summarize weekly team standups",
+    "department": "Product Management",
+    "details": "Turn recorded standups into a short written recap with action items."
+  },
+  {
+    "submitted": "2026-06-25",
+    "request": "Draft QBR decks from CRM data",
+    "department": "Sales",
+    "details": "Generate a first-draft quarterly business review from Salesforce numbers."
+  },
+  {
+    "submitted": "2026-06-25",
+    "request": "Detect duplicate vendor invoices",
+    "department": "Finance",
+    "details": "Flag likely duplicate or near-duplicate invoices before payment."
+  },
+  {
+    "submitted": "2026-06-26",
+    "request": "Generate release notes from merged PRs",
+    "department": "Software Engineering",
+    "details": "Summarize the week's merged pull requests into customer-facing notes."
+  },
+  {
+    "submitted": "2026-06-27",
+    "request": "Summarize customer call recordings",
+    "department": "Customer Support",
+    "details": "Produce a short summary + sentiment from support call transcripts."
+  },
+  {
+    "submitted": "2026-06-28",
+    "request": "Draft job descriptions from a role brief",
+    "department": "Human Resources",
+    "details": "Turn a few bullet points into a full, on-brand job description."
+  },
+  {
+    "submitted": "2026-06-30",
+    "request": "Auto-tag support tickets by theme",
+    "department": "Customer Support",
+    "details": "Cluster incoming tickets into themes so trends are visible."
+  }
+];

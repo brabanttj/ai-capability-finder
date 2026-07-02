@@ -10,14 +10,30 @@ import "./CapabilityForm.css";
 
 const AVAILABLE = TOOLS.filter((t) => t.available);
 const TOOL_NAMES = TOOLS.map((t) => t.name);
-const HEADER = ["Department", "Category", "Capability", "Description", ...TOOL_NAMES];
+const HEADER = [
+  "Department",
+  "Category",
+  "Capability",
+  "Description",
+  "Author",
+  "URL",
+  ...TOOL_NAMES,
+];
 const ALL_CATEGORIES = [...new Set(CAPABILITIES.map((c) => c.category))].sort();
 
-function csvEscape(v) {
-  return `"${String(v).replace(/"/g, '""')}"`;
-}
+// Existing capabilities for the picker (sorted by department, then name)
+const EXISTING = [...CAPABILITIES].sort(
+  (a, b) =>
+    a.department.localeCompare(b.department) ||
+    a.capability.localeCompare(b.capability)
+);
+const keyOf = (c) => `${c.department}||${c.capability}`;
+
+const csvEscape = (v) => `"${String(v).replace(/"/g, '""')}"`;
 
 export default function CapabilityForm({ onClose }) {
+  const [mode, setMode] = useState("existing"); // "existing" | "new"
+  const [existingKey, setExistingKey] = useState("");
   const [form, setForm] = useState({
     capability: "",
     department: "",
@@ -25,18 +41,42 @@ export default function CapabilityForm({ onClose }) {
     description: "",
   });
   const [tools, setTools] = useState(() => new Set());
+  const [author, setAuthor] = useState("");
+  const [url, setUrl] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [result, setResult] = useState(null); // { mode: "server" | "local" }
+  const [result, setResult] = useState(null);
 
-  const catSuggestions = useMemo(() => {
-    const forDept = form.department && CATEGORIES_BY_DEPARTMENT[form.department];
-    return forDept && forDept.length ? forDept : ALL_CATEGORIES;
-  }, [form.department]);
+  const chosen = useMemo(
+    () => EXISTING.find((c) => keyOf(c) === existingKey) || null,
+    [existingKey]
+  );
 
+  // Effective capability fields (from picker or the new-capability form)
+  const eff =
+    mode === "existing" && chosen
+      ? {
+          department: chosen.department,
+          category: chosen.category,
+          capability: chosen.capability,
+          description: chosen.description,
+        }
+      : {
+          department: form.department.trim(),
+          category: form.category.trim(),
+          capability: form.capability.trim(),
+          description: form.description.trim(),
+        };
+
+  const catSuggestions =
+    (form.department && CATEGORIES_BY_DEPARTMENT[form.department]) || ALL_CATEGORIES;
+
+  const baseValid = author.trim() && url.trim() && tools.size > 0;
   const valid =
-    form.capability.trim() && form.department.trim() && form.description.trim();
+    mode === "existing"
+      ? Boolean(chosen) && baseValid
+      : eff.capability && eff.department && eff.description && baseValid;
 
-  const upd = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  const updForm = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const toggleTool = (name) =>
     setTools((prev) => {
       const next = new Set(prev);
@@ -46,23 +86,22 @@ export default function CapabilityForm({ onClose }) {
     });
 
   const buildRow = () => [
-    form.department.trim(),
-    form.category.trim(),
-    form.capability.trim(),
-    form.description.trim(),
+    eff.department,
+    eff.category,
+    eff.capability,
+    eff.description,
+    author.trim(),
+    url.trim(),
     ...TOOL_NAMES.map((n) => (tools.has(n) ? "X" : "")),
   ];
-
   const downloadCsv = () => {
-    const row = buildRow();
-    const csv = [HEADER.map(csvEscape).join(","), row.map(csvEscape).join(",")].join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
+    const csv = [HEADER.map(csvEscape).join(","), buildRow().map(csvEscape).join(",")].join("\n");
+    const dl = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
     const a = document.createElement("a");
-    a.href = url;
-    a.download = "new-capability.csv";
+    a.href = dl;
+    a.download = "capability-guide.csv";
     a.click();
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(dl);
   };
   const copyRow = async () => {
     try {
@@ -76,63 +115,72 @@ export default function CapabilityForm({ onClose }) {
     e.preventDefault();
     if (!valid || submitting) return;
     setSubmitting(true);
-    let mode = "local";
+    const payload = { ...eff, tools: [...tools], author: author.trim(), url: url.trim() };
+    let outcome = "local";
     try {
       const res = await fetch("/api/add-capability", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, tools: [...tools] }),
+        body: JSON.stringify(payload),
       });
-      if (res.ok && (await res.json()).ok) mode = "server";
+      if (res.ok) {
+        const j = await res.json();
+        if (j.ok) outcome = j.added ? "created" : "added";
+      }
     } catch {
-      /* no local endpoint — fall back */
+      /* fall back */
     }
-    if (mode === "local") {
+    if (outcome === "local") {
       downloadCsv();
       copyRow();
     }
-    setResult({ mode });
+    setResult({ outcome });
     setSubmitting(false);
   };
 
-  const title = result ? "Thanks for sharing" : "Share how you AI";
-  const subtitle = result
-    ? undefined
-    : "Add a capability to the finder. Fields marked * are required.";
+  const done = Boolean(result);
 
   return (
-    <Modal title={title} subtitle={subtitle} onClose={onClose}>
-      {result ? (
+    <Modal
+      title={done ? "Thanks for sharing" : "Share how you AI"}
+      subtitle={
+        done
+          ? undefined
+          : "Add your way of using an AI tool. Fields marked * are required."
+      }
+      onClose={onClose}
+    >
+      {done ? (
         <div className="cfm-done">
           <div className="cfm-done__icon" aria-hidden="true">
-            {result.mode === "server" ? "✅" : "📋"}
+            {result.outcome === "local" ? "📋" : "✅"}
           </div>
-          {result.mode === "server" ? (
+          {result.outcome === "created" && (
             <>
-              <p className="cfm-done__title">Added to the spreadsheet</p>
+              <p className="cfm-done__title">New capability created</p>
               <p className="cfm-done__sub">
-                “{form.capability}” was written to <code>ai_automation_master.xlsx</code>.
-                Run <code>publish-changes.bat</code> to put it on the live site.
+                “{eff.capability}” was added with your guide. Run{" "}
+                <code>publish-changes.bat</code> to put it on the live site.
               </p>
             </>
-          ) : (
+          )}
+          {result.outcome === "added" && (
             <>
-              <p className="cfm-done__title">Your capability is ready to add</p>
+              <p className="cfm-done__title">Your guide was added</p>
               <p className="cfm-done__sub">
-                It's been <strong>downloaded as a CSV</strong> and{" "}
-                <strong>copied to your clipboard</strong>. Paste it as a new row on
-                the <strong>Capabilities</strong> tab of{" "}
-                <code>ai_automation_master.xlsx</code> (or send it to the site
-                owner), then publish.
+                Your way of using {[...tools].join(", ")} for “{eff.capability}”
+                is now listed. Run <code>publish-changes.bat</code> to publish.
               </p>
-              <div className="cfm-done__actions">
-                <Button variant="secondary" size="sm" onClick={downloadCsv}>
-                  Download CSV again
-                </Button>
-                <Button variant="secondary" size="sm" onClick={copyRow}>
-                  Copy row again
-                </Button>
-              </div>
+            </>
+          )}
+          {result.outcome === "local" && (
+            <>
+              <p className="cfm-done__title">Your guide is ready to add</p>
+              <p className="cfm-done__sub">
+                It's been <strong>downloaded</strong> and <strong>copied to your
+                clipboard</strong>. Send it to the site owner (or paste it into
+                the workbook), then publish.
+              </p>
             </>
           )}
           <div className="cfm-done__actions">
@@ -143,67 +191,107 @@ export default function CapabilityForm({ onClose }) {
         </div>
       ) : (
         <form className="cfm" onSubmit={handleSubmit}>
-          <label className="lt-field">
-            <span className="lt-field__label">Capability / Task *</span>
-            <input
-              className="lt-input"
-              value={form.capability}
-              onChange={upd("capability")}
-              placeholder="e.g. Draft release notes"
-              required
-            />
-          </label>
-
-          <div className="cfm__grid">
-            <label className="lt-field">
-              <span className="lt-field__label">Department *</span>
-              <input
-                className="lt-input"
-                list="cfm-departments"
-                value={form.department}
-                onChange={upd("department")}
-                placeholder="e.g. Product Management"
-                required
-              />
-              <datalist id="cfm-departments">
-                {DEPARTMENTS.map((d) => (
-                  <option key={d} value={d} />
-                ))}
-              </datalist>
-            </label>
-
-            <label className="lt-field">
-              <span className="lt-field__label">Category</span>
-              <input
-                className="lt-input"
-                list="cfm-categories"
-                value={form.category}
-                onChange={upd("category")}
-                placeholder="e.g. Execution"
-              />
-              <datalist id="cfm-categories">
-                {catSuggestions.map((c) => (
-                  <option key={c} value={c} />
-                ))}
-              </datalist>
-            </label>
+          <div className="cfm__tabs" role="tablist">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={mode === "existing"}
+              className={`cfm__tab${mode === "existing" ? " cfm__tab--on" : ""}`}
+              onClick={() => setMode("existing")}
+            >
+              Add to an existing capability
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={mode === "new"}
+              className={`cfm__tab${mode === "new" ? " cfm__tab--on" : ""}`}
+              onClick={() => setMode("new")}
+            >
+              Create a new capability
+            </button>
           </div>
 
-          <label className="lt-field">
-            <span className="lt-field__label">Description *</span>
-            <textarea
-              className="lt-input cfm__textarea"
-              value={form.description}
-              onChange={upd("description")}
-              placeholder="One line on what this automates"
-              rows={2}
-              required
-            />
-          </label>
+          {mode === "existing" ? (
+            <label className="lt-field">
+              <span className="lt-field__label">Capability *</span>
+              <select
+                className="lt-select"
+                value={existingKey}
+                onChange={(e) => setExistingKey(e.target.value)}
+                required
+              >
+                <option value="">Choose a capability…</option>
+                {EXISTING.map((c) => (
+                  <option key={keyOf(c)} value={keyOf(c)}>
+                    {c.department} · {c.capability}
+                  </option>
+                ))}
+              </select>
+              {chosen && <span className="cfm__hint">{chosen.description}</span>}
+            </label>
+          ) : (
+            <>
+              <label className="lt-field">
+                <span className="lt-field__label">Capability / Task *</span>
+                <input
+                  className="lt-input"
+                  value={form.capability}
+                  onChange={updForm("capability")}
+                  placeholder="e.g. Draft release notes"
+                  required
+                />
+              </label>
+              <div className="cfm__grid">
+                <label className="lt-field">
+                  <span className="lt-field__label">Department *</span>
+                  <input
+                    className="lt-input"
+                    list="cfm-departments"
+                    value={form.department}
+                    onChange={updForm("department")}
+                    placeholder="e.g. Product Management"
+                    required
+                  />
+                  <datalist id="cfm-departments">
+                    {DEPARTMENTS.map((d) => (
+                      <option key={d} value={d} />
+                    ))}
+                  </datalist>
+                </label>
+                <label className="lt-field">
+                  <span className="lt-field__label">Category</span>
+                  <input
+                    className="lt-input"
+                    list="cfm-categories"
+                    value={form.category}
+                    onChange={updForm("category")}
+                    placeholder="e.g. Execution"
+                  />
+                  <datalist id="cfm-categories">
+                    {catSuggestions.map((c) => (
+                      <option key={c} value={c} />
+                    ))}
+                  </datalist>
+                </label>
+              </div>
+              <label className="lt-field">
+                <span className="lt-field__label">Description *</span>
+                <textarea
+                  className="lt-input cfm__textarea"
+                  value={form.description}
+                  onChange={updForm("description")}
+                  placeholder="One line on what this automates"
+                  rows={2}
+                  required
+                />
+              </label>
+            </>
+          )}
 
           <div className="lt-field">
             <span className="lt-field__label">
-              AI tools enabled ({tools.size} selected)
+              AI tool(s) you use for this * ({tools.size} selected)
             </span>
             <div className="cfm__tools">
               {AVAILABLE.map((t) => (
@@ -222,12 +310,36 @@ export default function CapabilityForm({ onClose }) {
             </div>
           </div>
 
+          <div className="cfm__grid">
+            <label className="lt-field">
+              <span className="lt-field__label">Your name *</span>
+              <input
+                className="lt-input"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                placeholder="e.g. Jon Smith"
+                required
+              />
+            </label>
+            <label className="lt-field">
+              <span className="lt-field__label">Link to your guide *</span>
+              <input
+                className="lt-input"
+                type="url"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://…"
+                required
+              />
+            </label>
+          </div>
+
           <div className="cfm__actions">
             <Button type="button" variant="secondary" onClick={onClose}>
               Cancel
             </Button>
             <Button type="submit" variant="accent" disabled={!valid || submitting}>
-              {submitting ? "Submitting…" : "Submit capability"}
+              {submitting ? "Submitting…" : "Submit"}
             </Button>
           </div>
         </form>

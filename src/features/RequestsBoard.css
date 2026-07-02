@@ -1,0 +1,105 @@
+/* ==========================================================================
+   Requests board — upvotable "wish list" of capabilities people want
+   ========================================================================== */
+
+.rb-toolbar__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: var(--lt-space-3);
+  align-items: center;
+}
+
+.rb-intro {
+  margin: var(--lt-space-4) 0 var(--lt-space-5);
+  color: var(--lt-text-secondary);
+  font-size: var(--lt-fs-sm);
+}
+
+.rb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--lt-space-4);
+}
+
+.req-card {
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  transition: box-shadow var(--lt-transition), transform var(--lt-transition);
+}
+.req-card:hover {
+  box-shadow: var(--lt-shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Reddit-style vertical upvote on the left */
+.req-vote {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 58px;
+  padding: var(--lt-space-4) var(--lt-space-3);
+  border: none;
+  border-right: 1px solid var(--lt-color-border);
+  background: var(--lt-gray);
+  color: var(--lt-text-muted);
+  font-family: var(--lt-font-body);
+  font-weight: var(--lt-fw-black);
+  cursor: pointer;
+  transition: background var(--lt-transition), color var(--lt-transition);
+}
+.req-vote:hover:not(.req-vote--on) {
+  background: var(--lt-blue-lighten-4);
+  color: var(--lt-blue);
+}
+.req-vote--on {
+  background: var(--lt-green);
+  color: #fff;
+  border-right-color: var(--lt-green);
+}
+.req-vote__arrow {
+  font-size: 15px;
+  line-height: 1;
+}
+.req-vote__count {
+  font-size: var(--lt-fs-md);
+  font-variant-numeric: tabular-nums;
+}
+
+.req-card__body {
+  flex: 1;
+  min-width: 0;
+  padding: var(--lt-space-4);
+}
+.req-card__title {
+  font-family: var(--lt-font-display);
+  font-size: var(--lt-fs-md);
+  color: var(--lt-deep-blue);
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+.req-card__desc {
+  font-size: var(--lt-fs-sm);
+  color: var(--lt-text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--lt-space-3);
+}
+.req-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--lt-space-3);
+  flex-wrap: wrap;
+}
+.req-card__date {
+  font-size: var(--lt-fs-xs);
+  color: var(--lt-text-muted);
+}
+
+@media (max-width: 640px) {
+  .rb-toolbar__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
