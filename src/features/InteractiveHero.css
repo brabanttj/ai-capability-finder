@@ -134,9 +134,42 @@
   background: var(--lt-blue-lighten-4);
 }
 
+/* Animated count-up stat cards */
 .hero__stats {
-  margin-top: var(--lt-space-5);
-  font-size: var(--lt-fs-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lt-space-4);
+  margin-top: var(--lt-space-6);
+}
+.hero__stat {
+  min-width: 118px;
+  padding: var(--lt-space-4) var(--lt-space-5);
+  border-radius: var(--lt-radius-lg);
+  background: var(--lt-white);
+  border: 1px solid var(--lt-color-border);
+  border-top: 3px solid var(--stat);
+  box-shadow: var(--lt-shadow-sm);
+  transition: transform var(--lt-transition), box-shadow var(--lt-transition);
+}
+.hero__stat:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--lt-shadow-md);
+}
+.hero__stat-num {
+  display: block;
+  font-family: var(--lt-font-display);
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--stat);
+  font-variant-numeric: tabular-nums;
+}
+.hero__stat-label {
+  display: block;
+  margin-top: 5px;
+  font-size: var(--lt-fs-xs);
+  font-weight: var(--lt-fw-black);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
   color: var(--lt-text-muted);
 }
 
